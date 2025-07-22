@@ -42,10 +42,13 @@
 
 ### 2. Authentication Flow
 
-- [ ] 2.1 Token storage and sharing
-  - [ ] 2.1.1 Store token after login
-  - [ ] 2.1.2 Share token with all API calls
-  - [ ] 2.1.3 Unit tests for token handling
+**See: [Token Storage Research & Decision](token_storage_research.md)**
+
+- [ ] 2.1 Token storage and sharing (frontend-only, no backend changes)
+  - [ ] 2.1.1 Store token in sessionStorage after login using a dedicated Angular service
+  - [ ] 2.1.2 Use an Angular Http Interceptor to automatically attach the token from sessionStorage to all API calls
+  - [ ] 2.1.3 Clear the token from sessionStorage on logout
+  - [ ] 2.1.4 Unit tests for token storage, retrieval, attachment, and clearing
 - [ ] 2.2 Route protection
   - [ ] 2.2.1 Implement route guards or equivalent
   - [ ] 2.2.2 Unit tests for route protection
