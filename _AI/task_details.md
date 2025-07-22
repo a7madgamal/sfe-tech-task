@@ -49,7 +49,7 @@
   - [x] 2.1.2 Use an Angular Http Interceptor to automatically attach the token from sessionStorage to all API calls
   - [x] 2.1.3 Clear the token from sessionStorage on logout
 - [ ] 2.2 Route protection
-  - [ ] 2.2.1 Implement route guards or equivalent
+  - [ ] 2.2.1 Implement route guards using a functional CanActivate guard (not class-based), leveraging Angular's inject() API for DI. This approach follows the latest Angular best practices for route protection.
   - [ ] 2.2.2 Unit tests for route protection
 
 ### 3. User Management
