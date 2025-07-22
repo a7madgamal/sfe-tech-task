@@ -5,11 +5,12 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 import { TokenService } from '../../../core/services/token.service';
 
 @Component({
   selector: 'app-login-page',
-  imports: [MatFormField, MatInput, MatLabel, MatFormField, MatCard, ReactiveFormsModule, MatButton],
+  imports: [MatFormField, MatInput, MatLabel, MatFormField, MatCard, ReactiveFormsModule, MatButton, MatIcon],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss'
 })

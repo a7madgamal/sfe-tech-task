@@ -2,19 +2,59 @@
   max-width: 400px;
   margin: 5rem auto;
   padding: var(--spacing-xl);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.login-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0 0 var(--spacing-md) 0;
+  letter-spacing: -0.025em;
+}
+
+.login-subtitle {
+  font-size: 1rem;
+  margin: 0;
+  opacity: 0.8;
+  font-weight: 400;
+  line-height: 1.5;
 }
 
 mat-form-field {
   width: 100%;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
 }
 
 button {
   width: 100%;
-  margin-top: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  height: 48px;
+  font-size: 16px;
+  font-weight: 500;
 }
 
-p {
-  color: red;
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
   margin-top: var(--spacing-md);
+  padding: var(--spacing-sm);
+  border-radius: 4px;
+  border-left: 4px solid #f44336;
+  background-color: rgba(244, 67, 54, 0.1);
+  color: #f44336;
+}
+
+.error-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
 }
