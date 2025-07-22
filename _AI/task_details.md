@@ -45,7 +45,7 @@
 **See: [Token Storage Research & Decision](token_storage_research.md)**
 
 - [ ] 2.1 Token storage and sharing (frontend-only, no backend changes)
-  - [ ] 2.1.1 Store token in sessionStorage after login using a dedicated Angular service
+  - [x] 2.1.1 Store token in sessionStorage after login using a dedicated Angular service
   - [ ] 2.1.2 Use an Angular Http Interceptor to automatically attach the token from sessionStorage to all API calls
   - [ ] 2.1.3 Clear the token from sessionStorage on logout
   - [ ] 2.1.4 Unit tests for token storage, retrieval, attachment, and clearing
