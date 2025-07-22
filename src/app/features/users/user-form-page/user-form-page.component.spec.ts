@@ -3,10 +3,12 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { UserFormPageComponent } from './user-form-page.component';
 import { UsersFacadeService } from '../../../core/facades/users-facade.service';
+import { AuthService } from '../../../core/services/auth.service';
 
 describe('UserFormPageComponent', () => {
   let component: UserFormPageComponent;
@@ -14,6 +16,8 @@ describe('UserFormPageComponent', () => {
   let dialog: jasmine.SpyObj<MatDialog>;
   let facade: jasmine.SpyObj<UsersFacadeService>;
   let router: jasmine.SpyObj<Router>;
+  let snackBar: jasmine.SpyObj<MatSnackBar>;
+  let authService: jasmine.SpyObj<AuthService>;
   let httpMock: HttpTestingController;
 
   beforeEach(async () => {
@@ -24,6 +28,8 @@ describe('UserFormPageComponent', () => {
       'saveUser',
       'updateUserPassword'
     ]);
+    const snackBarSpy = jasmine.createSpyObj('MatSnackBar', ['open']);
+    const authServiceSpy = jasmine.createSpyObj('AuthService', ['logout']);
 
     // Mock signals as callable functions
     facadeSpy.user = jasmine.createSpy('user').and.returnValue({ id: 1, username: 'testuser', role: 'user' });
@@ -33,12 +39,14 @@ describe('UserFormPageComponent', () => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({
-      imports: [UserFormPageComponent, MatDialogModule, NoopAnimationsModule],
+      imports: [UserFormPageComponent, MatDialogModule, MatSnackBarModule, NoopAnimationsModule],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
         { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: () => '1' } } } },
         { provide: MatDialog, useValue: dialogSpy },
+        { provide: MatSnackBar, useValue: snackBarSpy },
+        { provide: AuthService, useValue: authServiceSpy },
         { provide: UsersFacadeService, useValue: facadeSpy },
         { provide: Router, useValue: routerSpy }
       ]
@@ -49,6 +57,8 @@ describe('UserFormPageComponent', () => {
     dialog = TestBed.inject(MatDialog) as jasmine.SpyObj<MatDialog>;
     facade = TestBed.inject(UsersFacadeService) as jasmine.SpyObj<UsersFacadeService>;
     router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+    snackBar = TestBed.inject(MatSnackBar) as jasmine.SpyObj<MatSnackBar>;
+    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
     httpMock = TestBed.inject(HttpTestingController);
     fixture.detectChanges();
   });
@@ -69,12 +79,14 @@ describe('UserFormPageComponent', () => {
     // Reset component and test with no ID
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
-      imports: [UserFormPageComponent, MatDialogModule, NoopAnimationsModule],
+      imports: [UserFormPageComponent, MatDialogModule, MatSnackBarModule, NoopAnimationsModule],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
         { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: () => null } } } },
         { provide: MatDialog, useValue: dialog },
+        { provide: MatSnackBar, useValue: snackBar },
+        { provide: AuthService, useValue: authService },
         { provide: UsersFacadeService, useValue: facade },
         { provide: Router, useValue: router }
       ]

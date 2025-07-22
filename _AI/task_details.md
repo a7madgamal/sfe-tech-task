@@ -79,7 +79,7 @@
   - [x] 3.3.4 On submit, call PUT /api/users/:id with only the password field (and any required fields)
     - Never send password unless changing it
     - Handle API errors and show user-friendly messages
-  - [ ] 3.3.5 On success, show confirmation and log the user out (require re-login)
+  - [x] 3.3.5 On success, show confirmation and log the user out (require re-login)
   - [x] 3.3.6 Unit tests for form validation, service logic, and UI states (loading, error, success)
 
 ### 4. Improvements

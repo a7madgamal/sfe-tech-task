@@ -8,11 +8,21 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-user-form-page',
-  imports: [UserFormComponent, MatError, MatProgressSpinnerModule, MatDialogModule, MatButtonModule, MatIconModule],
+  imports: [
+    UserFormComponent,
+    MatError,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSnackBarModule
+  ],
   templateUrl: './user-form-page.component.html',
   styleUrl: './user-form-page.component.scss'
 })
@@ -21,6 +31,8 @@ export class UserFormPageComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private facade = inject(UsersFacadeService);
   private dialog = inject(MatDialog);
+  private snackBar = inject(MatSnackBar);
+  private authService = inject(AuthService);
 
   user = this.facade.user;
   loading = this.facade.loading;
@@ -75,15 +87,28 @@ export class UserFormPageComponent implements OnInit {
         // Call the backend to update the password
         await this.facade.updateUserPassword(this.user()!.id, newPassword);
 
-        // Show success message (you could add a snackbar here)
-        console.log('Password updated successfully');
+        // Show success confirmation (step 3.3.5)
+        this.snackBar.open('Password updated successfully! You will be logged out for security.', 'OK', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['success-snackbar']
+        });
 
-        // Optionally log out the user (step 3.3.5)
-        // this.authService.logout();
-        // this.router.navigate(['/auth']);
+        // Log out the user and redirect to login (step 3.3.5)
+        setTimeout(() => {
+          this.authService.logout();
+          this.router.navigate(['/auth']);
+        }, 2000); // Give user 2 seconds to see the success message
       } catch (error) {
         console.error('Failed to update password:', error);
-        // Handle error (you could add error handling here)
+        // Show error message
+        this.snackBar.open('Failed to update password. Please try again.', 'Close', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['error-snackbar']
+        });
       }
     }
   }
