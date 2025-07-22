@@ -36,9 +36,9 @@
 
 - [x] 1.1 Initial project review and setup
 - [x] 1.2 Code style and formatting configuration
-- [ ] 1.3 Fix failing creation/unit tests for basic components/services
-  - [ ] 1.3.1 Provide HttpClient in tests for AuthService, UsersService, UsersFacadeService, UserFormPageComponent, UsersListPageComponent
-  - [ ] 1.3.2 Fix AppComponent title and render test expectations
+- [x] 1.3 Fix failing creation/unit tests for basic components/services
+  - [x] 1.3.1 Provide HttpClient in tests for AuthService, UsersService, UsersFacadeService, UserFormPageComponent, UsersListPageComponent
+  - [x] 1.3.2 Fix AppComponent title and render test expectations
 
 ### 2. Authentication Flow
 

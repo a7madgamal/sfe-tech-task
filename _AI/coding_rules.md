@@ -6,13 +6,18 @@
 - **Keep code comments minimal.** Only add comments when necessary to clarify non-obvious logic or prevent confusion. Do not comment every small change.
 - **Write small, focused commits** that match the sub-tasks in \_AI/task_details.md. Each commit should be easy to review and understand.
 - **Unit tests are required for each main feature or fix.** Tests should be committed together with the implementation.
-- **Use Angular best practices:**
+- **Use Angular 19 best practices:**
   - Prefer standalone components and signals as in the current codebase.
   - Use dependency injection for services and facades.
   - Keep components "dumb" (UI only) and delegate logic to facades/services.
   - Use reactive forms for form logic and validation.
   - Use Angular Material for UI consistency.
   - Use route guards for authentication/authorization.
+  - **For HTTP testing in Angular 16+:**
+    - Use both `provideHttpClient()` and `provideHttpClientTesting()` in the `providers` array of your test module, in that order, for any test involving `HttpClient` or `inject(HttpClient)` (including standalone components and services).
+    - Do not use the deprecated `HttpClientTestingModule` in `imports`.
+    - The order matters: `provideHttpClient()` must come before `provideHttpClientTesting()`.
+    - This ensures all dependencies are resolved for both classic and standalone Angular patterns.
 - **Error handling:**
   - Show user-friendly error messages for failed API calls or invalid input.
   - Use loading indicators for async operations.
