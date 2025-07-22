@@ -1,6 +1,2 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-npx lint-staged
-npm test
-npx prettier --check .
+#!/bin/sh
+powershell.exe -File .husky/pre-commit.ps1
