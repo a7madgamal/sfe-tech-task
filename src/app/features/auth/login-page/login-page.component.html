@@ -4,20 +4,18 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Username</mat-label>
-      <input matInput formControlName="username"/>
+      <input matInput formControlName="username" />
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Password</mat-label>
-      <input matInput type="password" formControlName="password"/>
+      <input matInput type="password" formControlName="password" />
     </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
-      Login
-    </button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Login</button>
 
     @if (error()) {
-      <p>{{ error() }}</p>
+    <p>{{ error() }}</p>
     }
   </form>
 </mat-card>

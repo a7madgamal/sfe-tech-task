@@ -6,9 +6,7 @@ import { UsersFacadeService } from '../../../core/facades/users-facade.service';
 
 @Component({
   selector: 'app-user-form-page',
-  imports: [
-    UserFormComponent
-  ],
+  imports: [UserFormComponent],
   templateUrl: './user-form-page.component.html',
   styleUrl: './user-form-page.component.scss'
 })

@@ -8,15 +8,7 @@ import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-login-page',
-  imports: [
-    MatFormField,
-    MatInput,
-    MatLabel,
-    MatFormField,
-    MatCard,
-    ReactiveFormsModule,
-    MatButton
-  ],
+  imports: [MatFormField, MatInput, MatLabel, MatFormField, MatCard, ReactiveFormsModule, MatButton],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss'
 })
@@ -30,6 +22,5 @@ export class LoginPageComponent {
     password: ['', Validators.required]
   });
 
-  submit(): void {
-  }
+  submit(): void {}
 }

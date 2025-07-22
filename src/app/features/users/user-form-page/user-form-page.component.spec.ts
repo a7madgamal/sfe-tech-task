@@ -9,8 +9,7 @@ describe('UserFormPageComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [UserFormPageComponent]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UserFormPageComponent);
     component = fixture.componentInstance;

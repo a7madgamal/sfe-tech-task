@@ -2,10 +2,7 @@
 <button mat-raised-button color="primary" (click)="goToNew()">Add User</button>
 
 @if (!facade.loading()) {
-  <app-users-list
-    [users]="facade.users()"
-    (edit)="goToEdit($event)"
-  />
+<app-users-list [users]="facade.users()" (edit)="goToEdit($event)" />
 } @else {
-  <p>Loading...</p>
+<p>Loading...</p>
 }
