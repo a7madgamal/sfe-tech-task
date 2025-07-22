@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'styles/variables';
+@use 'styles/variables' as *;
 
 html,
 body {
@@ -8,6 +8,7 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+  background-color: #121212;
 }
 
 // Utility classes using spacing variables
