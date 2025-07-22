@@ -85,6 +85,29 @@
 ### 4. Improvements
 
 - [ ] 4.1 UI/UX polish (bonus)
+  - [ ] 4.1.1 Create design system foundation
+    - [x] 4.1.1.1 Create src/styles/ directory with \_variables.scss for spacing variables only (keep Material's default colors and typography)
+    - [ ] 4.1.1.2 Add global layout utilities (container, page-header, page-content) to styles.scss
+    - [ ] 4.1.1.3 Add utility classes (flex, flex-center, flex-between, gap utilities) to styles.scss
+  - [ ] 4.1.2 Remove inline styles and implement proper layout
+    - [ ] 4.1.2.1 Replace inline styles in users-list-page.component.html with proper CSS classes
+    - [ ] 4.1.2.2 Replace inline styles in user-form-page.component.html with proper CSS classes
+    - [ ] 4.1.2.3 Add proper spacing and layout to all component SCSS files
+  - [ ] 4.1.3 Standardize Material UI components
+    - [ ] 4.1.3.1 Implement consistent button hierarchy (primary, secondary, icon buttons)
+    - [ ] 4.1.3.2 Standardize form field styling and spacing across all forms
+    - [ ] 4.1.3.3 Improve table styling and responsive behavior
+    - [ ] 4.1.3.4 Add proper loading states and error message styling
+  - [ ] 4.1.4 Enhance user experience
+    - [ ] 4.1.4.1 Add proper page titles and navigation breadcrumbs
+    - [ ] 4.1.4.2 Implement responsive design for mobile devices
+    - [ ] 4.1.4.3 Add smooth transitions and hover effects
+    - [ ] 4.1.4.4 Improve accessibility (focus management, ARIA labels, color contrast)
+  - [ ] 4.1.5 Polish and final touches
+    - [ ] 4.1.5.1 Add consistent spacing and typography throughout the app
+    - [ ] 4.1.5.2 Implement proper empty states and error handling UI
+    - [ ] 4.1.5.3 Add subtle animations and micro-interactions
+    - [ ] 4.1.5.4 Ensure cross-browser compatibility and performance
 - [ ] 4.2 Additional unit tests (bonus)
 
 ### 5. Git & Submission
