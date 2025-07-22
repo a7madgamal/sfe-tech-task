@@ -9,7 +9,7 @@
     "ecmaVersion": 2021,
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "@angular-eslint"],
+  "plugins": ["@typescript-eslint", "@angular-eslint", "import"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -18,6 +18,8 @@
   ],
   "rules": {
     "@typescript-eslint/no-unused-vars": ["error"],
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "import/no-unused-modules": ["error", { "unusedExports": true }],
+    "import/no-unused-imports": "error"
   }
 }

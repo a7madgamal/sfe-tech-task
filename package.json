@@ -10,7 +10,8 @@
     "test": "ng test --browsers=ChromeHeadless --watch=false --progress=false --code-coverage=false",
     "prepare": "husky",
     "format": "prettier --write .",
-    "lint": "eslint 'src/**/*.ts'"
+    "lint": "eslint 'src/**/*.ts'",
+    "tsc": "tsc --noEmit"
   },
   "private": true,
   "dependencies": {
@@ -36,6 +37,7 @@
     "@typescript-eslint/eslint-plugin": "^8.38.0",
     "@typescript-eslint/parser": "^8.38.0",
     "eslint": "^9.31.0",
+    "eslint-plugin-import": "^2.32.0",
     "husky": "^8.0.0",
     "jasmine-core": "~5.5.0",
     "karma": "~6.4.0",
