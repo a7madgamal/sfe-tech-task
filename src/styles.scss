@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'styles/variables';
 
 html,
 body {
@@ -7,4 +8,57 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+// Utility classes using spacing variables
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gap-sm {
+  gap: var(--spacing-sm);
+}
+
+.gap-md {
+  gap: var(--spacing-md);
+}
+
+.margin-top-lg {
+  margin-top: var(--spacing-lg);
+}
+
+.margin-top-xl {
+  margin-top: var(--spacing-xl);
+}
+
+// Global layout utilities
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-lg) 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.page-content {
+  padding: var(--spacing-lg) 0;
 }

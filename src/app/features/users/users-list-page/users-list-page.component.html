@@ -1,19 +1,21 @@
-<div style="display: flex; align-items: center; justify-content: space-between">
+<div class="page-header">
   <h2>Users</h2>
-  <div>
+  <div class="flex gap-sm">
     <button mat-raised-button color="primary" (click)="goToNew()">Add User</button>
-    <button mat-icon-button color="warn" (click)="logout()" matTooltip="Logout" style="margin-left: 8px">
+    <button mat-icon-button color="warn" (click)="logout()" matTooltip="Logout">
       <mat-icon>logout</mat-icon>
     </button>
   </div>
 </div>
 
-@if (facade.error()) {
-  <mat-error>{{ facade.error() }}</mat-error>
-} @else if (facade.loading()) {
-  <div style="display: flex; justify-content: center; margin: 2rem 0">
-    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-  </div>
-} @else {
-  <app-users-list [users]="facade.users()" (edit)="goToEdit($event)" (delete)="deleteUser($event)" />
-}
+<div class="page-content">
+  @if (facade.error()) {
+    <mat-error>{{ facade.error() }}</mat-error>
+  } @else if (facade.loading()) {
+    <div class="flex-center">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+  } @else {
+    <app-users-list [users]="facade.users()" (edit)="goToEdit($event)" (delete)="deleteUser($event)" />
+  }
+</div>

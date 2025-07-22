@@ -1,19 +1,25 @@
-<h2>{{ user()?.id ? 'Edit' : 'Create' }} User</h2>
+<div class="page-header">
+  <h2>{{ user()?.id ? 'Edit' : 'Create' }} User</h2>
+</div>
 
-@if (error()) {
-  <mat-error>{{ error() }}</mat-error>
-}
+<div class="page-content">
+  @if (error()) {
+    <mat-error>{{ error() }}</mat-error>
+  }
 
-@if (!loading()) {
-  <app-user-form [user]="user()" (save)="handleSave($event)" (cancel)="goBack()" [disabled]="loading()" />
-  @if (user()?.id) {
-    <div style="margin-top: 2rem; display: flex; justify-content: flex-end">
-      <button mat-raised-button color="accent" type="button" (click)="openChangePasswordDialog()">
-        <mat-icon>lock</mat-icon>
-        Change Password
-      </button>
+  @if (!loading()) {
+    <app-user-form [user]="user()" (save)="handleSave($event)" (cancel)="goBack()" [disabled]="loading()" />
+    @if (user()?.id) {
+      <div class="flex" style="justify-content: flex-end; margin-top: var(--spacing-xl)">
+        <button mat-raised-button color="accent" type="button" (click)="openChangePasswordDialog()">
+          <mat-icon>lock</mat-icon>
+          Change Password
+        </button>
+      </div>
+    }
+  } @else {
+    <div class="flex-center">
+      <mat-spinner diameter="40"></mat-spinner>
     </div>
   }
-} @else {
-  <mat-spinner diameter="40"></mat-spinner>
-}
+</div>
