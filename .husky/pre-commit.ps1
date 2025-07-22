@@ -2,14 +2,14 @@ Write-Host "Node version: $(node -v)"
 Write-Host "NPM version: $(npm -v)"
 Write-Host "Running lint-staged..."
 npx lint-staged
-Write-Host "Running npm run lint..."
+Write-Host "Running ng lint..."
 npm run lint
-Write-Host "Running TypeScript type check..."
+Write-Host "Running Angular build type check..."
 if (!(npm run tsc)) {
-  Write-Host "TypeScript type check failed. Commit aborted."
+  Write-Host "Angular build/type check failed. Commit aborted."
   exit 1
 }
 Write-Host "Running tests..."
-npm test
+npx ng test --browsers=ChromeHeadless --watch=false
 Write-Host "Running prettier check..."
 npx prettier --check . 

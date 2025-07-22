@@ -10,8 +10,8 @@
     "test": "ng test --browsers=ChromeHeadless --watch=false --progress=false --code-coverage=false",
     "prepare": "husky",
     "format": "prettier --write .",
-    "lint": "eslint 'src/**/*.ts'",
-    "tsc": "tsc --noEmit"
+    "lint": "ng lint",
+    "tsc": "ng build"
   },
   "private": true,
   "dependencies": {
@@ -31,12 +31,18 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^19.1.4",
+    "@angular-eslint/builder": "20.1.1",
+    "@angular-eslint/eslint-plugin": "20.1.1",
+    "@angular-eslint/eslint-plugin-template": "20.1.1",
+    "@angular-eslint/schematics": "20.1.1",
+    "@angular-eslint/template-parser": "20.1.1",
     "@angular/cli": "^19.1.4",
     "@angular/compiler-cli": "^19.1.0",
     "@types/jasmine": "~5.1.0",
-    "@typescript-eslint/eslint-plugin": "^8.38.0",
-    "@typescript-eslint/parser": "^8.38.0",
-    "eslint": "^9.31.0",
+    "@typescript-eslint/eslint-plugin": "7.11.0",
+    "@typescript-eslint/parser": "7.11.0",
+    "angular-eslint": "^20.1.1",
+    "eslint": "8.57.1",
     "eslint-plugin-import": "^2.32.0",
     "husky": "^8.0.0",
     "jasmine-core": "~5.5.0",
