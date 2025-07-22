@@ -5,6 +5,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { MatButton } from '@angular/material/button';
+import { TokenService } from '../../../core/services/token.service';
 
 @Component({
   selector: 'app-login-page',
@@ -14,6 +15,9 @@ import { MatButton } from '@angular/material/button';
 })
 export class LoginPageComponent {
   private fb: FormBuilder = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private tokenService = inject(TokenService);
+  private router = inject(Router);
 
   error: WritableSignal<string> = signal('');
 
@@ -22,5 +26,21 @@ export class LoginPageComponent {
     password: ['', Validators.required]
   });
 
-  submit(): void {}
+  submit(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    const { username, password } = this.form.value;
+    this.authService.login(username!, password!).subscribe({
+      next: res => {
+        this.tokenService.setToken(res.token);
+        this.error.set('');
+        this.router.navigate(['/users']);
+      },
+      error: err => {
+        this.error.set('Invalid username or password');
+      }
+    });
+  }
 }
