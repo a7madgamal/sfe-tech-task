@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthResponse } from '../../shared/models/auth';
 import { TokenService } from './token.service';
+import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -12,7 +13,12 @@ export class AuthService {
   private readonly apiUrl: string = 'api/auth';
 
   login(username: string, password: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { username, password });
+    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { username, password }).pipe(
+      tap(response => {
+        this.tokenService.setToken(response.token);
+        this.tokenService.setUser(response.user);
+      })
+    );
   }
 
   logout(): void {

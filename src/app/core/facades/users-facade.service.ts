@@ -33,12 +33,26 @@ export class UsersFacadeService {
     this.store.setLoading(true);
 
     action.subscribe({
-      next: (saved) => {
+      next: saved => {
         this.store.upsertUser(saved);
         this.store.setLoading(false);
       },
       error: () => {
         this.store.setError('Failed to save user');
+        this.store.setLoading(false);
+      }
+    });
+  }
+
+  deleteUser(id: number): void {
+    this.store.setLoading(true);
+    this.api.deleteUser(id).subscribe({
+      next: () => {
+        this.store.deleteUser(id);
+        this.store.setLoading(false);
+      },
+      error: () => {
+        this.store.setError('Failed to delete user');
         this.store.setLoading(false);
       }
     });

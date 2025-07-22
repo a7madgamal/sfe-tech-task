@@ -51,22 +51,24 @@
   - [ ] 2.1.4 Implement login submit logic: call AuthService.login, store token, and redirect to user management list on success
 - [x] 2.2 Route protection
   - [x] 2.2.1 Implement route guards using a functional CanActivate guard (not class-based), leveraging Angular's inject() API for DI. This approach follows the latest Angular best practices for route protection.
-  - [ ] 2.2.2 Implement login submit logic: call AuthService.login; on success, store token and redirect to user management list; on failure, show an error message. Show field-level validation errors and mark fields as touched on submit for better UX.
+- [x] 2.3 Implement login submit logic: call AuthService.login; on success, store token and redirect to user management list; on failure, show an error message.
 
 ### 3. User Management
 
-- [ ] 3.1 User form create/edit logic
-  - [ ] 3.1.1 Implement create user logic
-  - [ ] 3.1.2 Implement edit user logic
-  - [ ] 3.1.3 Unit tests for form logic
-- [ ] 3.2 Form validation
-  - [ ] 3.2.1 Required fields validation
-  - [ ] 3.2.2 Custom validator: block 'test' in name (match backend validation)
-  - [ ] 3.2.3 Unit tests for validation
-- [ ] 3.3 Loading & error states
-  - [ ] 3.3.1 Show loading indicators
-  - [ ] 3.3.2 Show error messages
-  - [ ] 3.3.3 Unit tests for loading/error states
+- [x] 3.1 User listing
+  - [x] 3.1.1 Implement user list display
+  - [x] 3.1.2 Add edit and delete links or buttons (use Angular Material 17+ button/icon best practices)
+  - [x] 3.1.3 Handle empty state (show message when no users)
+  - [x] 3.1.4 Handle error state (show error message on API failure)
+  - [x] 3.1.5 Show loading indicator while fetching users
+- [ ] 3.2 User form create/edit logic
+  - [ ] 3.2.1 Implement create user logic (with loading & error states)
+  - [ ] 3.2.2 Implement edit user logic (with loading & error states)
+  - [ ] 3.2.3 Unit tests for form logic (including loading & error states)
+- [ ] 3.3 Form validation
+  - [ ] 3.3.1 Required fields validation
+  - [ ] 3.3.2 Custom validator: block 'test' in name (match backend validation)
+  - [ ] 3.3.3 Unit tests for validation
 
 ### 4. Improvements
 
@@ -83,3 +85,9 @@
 ---
 
 Update this file as you progress. Use checkboxes to track completion. Keep summaries high-level for easy context in future prompts.
+
+---
+
+# Open Questions
+
+- [ ] Backend does not support deleting users (DELETE /api/users/:id). This is required for full user management functionality.

@@ -35,4 +35,9 @@ export class UserStore {
       this.users.set(updated);
     }
   }
+
+  deleteUser(id: number) {
+    const current = this.users();
+    this.users.set(current.filter(u => u.id !== id));
+  }
 }

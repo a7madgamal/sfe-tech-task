@@ -27,14 +27,14 @@ describe('authGuard (functional)', () => {
 
   it('should allow navigation if token exists', () => {
     tokenService.getToken.and.returnValue('abc123');
-    const result = authGuard();
+    const result = TestBed.runInInjectionContext(() => authGuard());
     expect(result).toBeTrue();
     expect(navigateSpy).not.toHaveBeenCalled();
   });
 
   it('should deny navigation and redirect to /auth if token is missing', () => {
     tokenService.getToken.and.returnValue(null);
-    const result = authGuard();
+    const result = TestBed.runInInjectionContext(() => authGuard());
     expect(result).toBeFalse();
     expect(navigateSpy).toHaveBeenCalledWith(['/auth']);
   });

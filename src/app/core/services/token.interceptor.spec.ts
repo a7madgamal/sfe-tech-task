@@ -18,7 +18,9 @@ describe('tokenInterceptor (function-based)', () => {
   function runInterceptor(req: HttpRequest<any>, nextFn: HttpHandlerFn) {
     // tokenInterceptor uses inject(TokenService) internally, so TestBed context is required
     let result: HttpEvent<any> | undefined;
-    tokenInterceptor(req, nextFn).subscribe(event => (result = event));
+    TestBed.runInInjectionContext(() => {
+      tokenInterceptor(req, nextFn).subscribe(event => (result = event));
+    });
     return result;
   }
 
