@@ -77,4 +77,21 @@ export class UsersFacadeService {
       }
     });
   }
+
+  updateUserPassword(userId: number, newPassword: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.store.setLoading(true);
+      this.api.updateUserPassword(userId, newPassword).subscribe({
+        next: () => {
+          this.store.setLoading(false);
+          resolve();
+        },
+        error: error => {
+          this.store.setError('Failed to update password');
+          this.store.setLoading(false);
+          reject(error);
+        }
+      });
+    });
+  }
 }

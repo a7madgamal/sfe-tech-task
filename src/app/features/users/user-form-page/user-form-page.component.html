@@ -6,6 +6,14 @@
 
 @if (!loading()) {
   <app-user-form [user]="user()" (save)="handleSave($event)" (cancel)="goBack()" [disabled]="loading()" />
+  @if (user()?.id) {
+    <div style="margin-top: 2rem; display: flex; justify-content: flex-end">
+      <button mat-raised-button color="accent" type="button" (click)="openChangePasswordDialog()">
+        <mat-icon>lock</mat-icon>
+        Change Password
+      </button>
+    </div>
+  }
 } @else {
   <mat-spinner diameter="40"></mat-spinner>
 }

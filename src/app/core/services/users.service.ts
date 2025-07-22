@@ -28,4 +28,8 @@ export class UsersService {
   deleteUser(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  updateUserPassword(userId: number, newPassword: string): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/${userId}`, { password: newPassword });
+  }
 }

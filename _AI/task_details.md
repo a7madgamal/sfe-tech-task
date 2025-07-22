@@ -44,7 +44,7 @@
 
 **See: [Token Storage Research & Decision](token_storage_research.md)**
 
-- [ ] 2.1 Token storage and sharing (frontend-only, no backend changes)
+- [x] 2.1 Token storage and sharing (frontend-only, no backend changes)
   - [x] 2.1.1 Store token in sessionStorage after login using a dedicated Angular service
   - [x] 2.1.2 Use an Angular Http Interceptor to automatically attach the token from sessionStorage to all API calls
   - [x] 2.1.3 Clear the token from sessionStorage on logout
@@ -66,10 +66,21 @@
   - [x] 3.2.1 Implement create user logic (with loading & error states)
   - [x] 3.2.2 Implement edit user logic (with loading & error states)
   - [x] 3.2.3 Unit tests for form logic (including loading & error states)
-- [ ] 3.3 Form validation
-  - [ ] 3.3.1 Required fields validation
-  - [ ] 3.3.2 Custom validator: block 'test' in name (match backend validation)
-  - [ ] 3.3.3 Unit tests for validation
+- [x] 3.3 Implement password change UI and logic
+  - [x] 3.3.1 Add a "Change Password" button/section to the user edit page
+  - [x] 3.3.2 Show a form (in dialog) with:
+    - New password (type="password")
+    - Confirm new password (type="password")
+    - Show/hide password toggle for both fields
+  - [x] 3.3.3 Validate on frontend:
+    - Both fields required
+    - New password and confirmation must match
+    - New password must be at least 6 characters and contain at least one number
+  - [x] 3.3.4 On submit, call PUT /api/users/:id with only the password field (and any required fields)
+    - Never send password unless changing it
+    - Handle API errors and show user-friendly messages
+  - [ ] 3.3.5 On success, show confirmation and log the user out (require re-login)
+  - [x] 3.3.6 Unit tests for form validation, service logic, and UI states (loading, error, success)
 
 ### 4. Improvements
 

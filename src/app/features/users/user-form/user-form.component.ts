@@ -33,7 +33,18 @@ export class UserFormComponent {
       const u = this.user();
       console.log('User for patchValue:', u);
       if (u) {
-        this.form.patchValue(u);
+        // For existing users, only patch username and role, exclude password
+        this.form.patchValue({
+          username: u.username,
+          role: u.role
+        });
+        // Remove password validation for existing users
+        this.form.get('password')?.clearValidators();
+        this.form.get('password')?.updateValueAndValidity();
+      } else {
+        // For new users, add password validation
+        this.form.get('password')?.setValidators([Validators.required]);
+        this.form.get('password')?.updateValueAndValidity();
       }
     });
   }
@@ -56,7 +67,14 @@ export class UserFormComponent {
       this.form.markAllAsTouched();
       return;
     }
+
     const userData = { ...this.user(), ...this.form.value };
+
+    // For existing users, exclude password from the data
+    if (this.user()?.id) {
+      delete userData.password;
+    }
+
     this.save.emit(userData as Partial<User>);
   }
 }
