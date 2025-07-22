@@ -1,5 +1,12 @@
-<h2>Users</h2>
-<button mat-raised-button color="primary" (click)="goToNew()">Add User</button>
+<div style="display: flex; align-items: center; justify-content: space-between">
+  <h2>Users</h2>
+  <div>
+    <button mat-raised-button color="primary" (click)="goToNew()">Add User</button>
+    <button mat-icon-button color="warn" (click)="logout()" matTooltip="Logout" style="margin-left: 8px">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+</div>
 
 @if (facade.error()) {
   <mat-error>{{ facade.error() }}</mat-error>

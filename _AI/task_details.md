@@ -52,6 +52,7 @@
 - [x] 2.2 Route protection
   - [x] 2.2.1 Implement route guards using a functional CanActivate guard (not class-based), leveraging Angular's inject() API for DI. This approach follows the latest Angular best practices for route protection.
 - [x] 2.3 Implement login submit logic: call AuthService.login; on success, store token and redirect to user management list; on failure, show an error message.
+- [ ] 2.4 Implement logout button for the user list page
 
 ### 3. User Management
 
@@ -62,7 +63,7 @@
   - [x] 3.1.4 Handle error state (show error message on API failure)
   - [x] 3.1.5 Show loading indicator while fetching users
 - [ ] 3.2 User form create/edit logic
-  - [ ] 3.2.1 Implement create user logic (with loading & error states)
+  - [x] 3.2.1 Implement create user logic (with loading & error states)
   - [ ] 3.2.2 Implement edit user logic (with loading & error states)
   - [ ] 3.2.3 Unit tests for form logic (including loading & error states)
 - [ ] 3.3 Form validation
