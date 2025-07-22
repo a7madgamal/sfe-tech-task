@@ -21,11 +21,31 @@ export class UsersFacadeService {
         this.store.setError('');
         this.store.setLoading(false);
       },
-      error: err => {
+      error: () => {
         this.store.setError('Failed to load users');
         this.store.setLoading(false);
       }
     });
+  }
+
+  loadUserById(id: number): void {
+    this.store.setLoading(true);
+    this.api.getUserById(id).subscribe({
+      next: user => {
+        this.store.setUser(user);
+        console.log('Set user in store:', user);
+        this.store.setError('');
+        this.store.setLoading(false);
+      },
+      error: () => {
+        this.store.setError('Failed to load user');
+        this.store.setLoading(false);
+      }
+    });
+  }
+
+  clearUser(): void {
+    this.store.setUser(null);
   }
 
   saveUser(user: Partial<User>): void {

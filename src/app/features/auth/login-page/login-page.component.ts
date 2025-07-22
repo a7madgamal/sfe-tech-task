@@ -38,7 +38,7 @@ export class LoginPageComponent {
         this.error.set('');
         this.router.navigate(['/users']);
       },
-      error: err => {
+      error: () => {
         this.error.set('Invalid username or password');
       }
     });

@@ -1,14 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { HttpClient } from '@angular/common/http';
 import { HttpTestingController } from '@angular/common/http/testing';
 
 import { UsersService } from './users.service';
 
 describe('UsersService', () => {
   let service: UsersService;
-  let http: HttpClient;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
@@ -16,8 +14,7 @@ describe('UsersService', () => {
       providers: [provideHttpClient(), provideHttpClientTesting()]
     });
     service = TestBed.inject(UsersService);
-    http = TestBed.inject(HttpClient);
-    httpMock = TestBed.inject(HttpTestingController as any);
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
   it('should be created', () => {

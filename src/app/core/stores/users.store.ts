@@ -12,7 +12,7 @@ export class UserStore {
     this.users.set(newUsers);
   }
 
-  setUser(newUser: User) {
+  setUser(newUser: User | null) {
     this.user.set(newUser);
   }
 

@@ -1,4 +1,4 @@
-import { Component, input, InputSignal, output, OutputEmitterRef } from '@angular/core';
+import { Component, input, OutputEmitterRef, output } from '@angular/core';
 import { User } from '../../../shared/models/user';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';

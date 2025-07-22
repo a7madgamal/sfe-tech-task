@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  const user = users.find(u => u.id === req.params.id);
+  const user = users.find(u => u.id === +req.params.id);
 
   if (!user) {
     return res.status(404).json({ message: 'User not found' });
@@ -33,7 +33,7 @@ router.get('/:id', (req, res) => {
 router.post('/create', (req, res) => {
   const { username, password, role } = req.body;
 
-  if (users.find((u) => u.username === username)) {
+  if (users.find(u => u.username === username)) {
     return res.status(400).json({ message: 'Username already exists' });
   }
 
@@ -45,7 +45,7 @@ router.post('/create', (req, res) => {
     id: Date.now(),
     username,
     password,
-    role,
+    role
   };
 
   users.push(newUser);
@@ -54,7 +54,7 @@ router.post('/create', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const id = +req.params.id;
-  const index = users.findIndex((u) => u.id === id);
+  const index = users.findIndex(u => u.id === id);
 
   if (index === -1) return res.status(404).json({ message: 'User not found' });
 

@@ -42,4 +42,8 @@
 
 ---
 
+# Signal Input & Angular Best Practices
+
+- When using Angular's signal-based input() in components, do NOT use ngOnChanges to react to input changes. Instead, use a computed effect (effect(() => ...)) to respond to changes in the input signal. This ensures the component reacts properly to input updates, such as pre-filling forms after async data loads.
+
 Update these rules as the project evolves or as new requirements are introduced.

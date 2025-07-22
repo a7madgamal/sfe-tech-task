@@ -2,7 +2,6 @@ import { HttpHandlerFn, HttpRequest, HttpEvent, HttpResponse } from '@angular/co
 import { tokenInterceptor } from './token.interceptor';
 import { TokenService } from './token.service';
 import { TestBed } from '@angular/core/testing';
-import { inject } from '@angular/core';
 import { of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -78,7 +77,7 @@ describe('tokenInterceptor (function-based)', () => {
     tokenService.getToken.and.returnValue('abc123');
     const req = new HttpRequest('GET', '/api/protected');
     const errorResponse = { status: 401, message: 'Unauthorized' };
-    const next: HttpHandlerFn = r => throwError(() => errorResponse);
+    const next: HttpHandlerFn = () => throwError(() => errorResponse);
     const { error } = runInterceptor(req, next);
     expect(tokenService.clearToken).toHaveBeenCalled();
     expect(router.navigate).toHaveBeenCalledWith(['/auth']);

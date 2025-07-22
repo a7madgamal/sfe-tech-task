@@ -62,10 +62,10 @@
   - [x] 3.1.3 Handle empty state (show message when no users)
   - [x] 3.1.4 Handle error state (show error message on API failure)
   - [x] 3.1.5 Show loading indicator while fetching users
-- [ ] 3.2 User form create/edit logic
+- [x] 3.2 User form create/edit logic
   - [x] 3.2.1 Implement create user logic (with loading & error states)
-  - [ ] 3.2.2 Implement edit user logic (with loading & error states)
-  - [ ] 3.2.3 Unit tests for form logic (including loading & error states)
+  - [x] 3.2.2 Implement edit user logic (with loading & error states)
+  - [x] 3.2.3 Unit tests for form logic (including loading & error states)
 - [ ] 3.3 Form validation
   - [ ] 3.3.1 Required fields validation
   - [ ] 3.3.2 Custom validator: block 'test' in name (match backend validation)
@@ -92,3 +92,9 @@ Update this file as you progress. Use checkboxes to track completion. Keep summa
 # Open Questions
 
 - [ ] Backend does not support deleting users (DELETE /api/users/:id). This is required for full user management functionality.
+
+---
+
+# Signal Input Note
+
+- When using Angular's signal-based input() in components, do NOT use ngOnChanges to react to input changes. Instead, use a computed effect (effect(() => ...)) to respond to changes in the input signal. This ensures the component reacts properly to input updates, such as pre-filling forms after async data loads.

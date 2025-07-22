@@ -1,4 +1,4 @@
-import { Component, inject, input, output, OutputEmitterRef, Input } from '@angular/core';
+import { Component, inject, input, output, OutputEmitterRef, Input, effect } from '@angular/core';
 import { User } from '../../../shared/models/user';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
@@ -27,6 +27,16 @@ export class UserFormComponent {
     role: ['', Validators.required],
     password: ['']
   });
+
+  constructor() {
+    effect(() => {
+      const u = this.user();
+      console.log('User for patchValue:', u);
+      if (u) {
+        this.form.patchValue(u);
+      }
+    });
+  }
 
   get username() {
     return this.form.get('username');

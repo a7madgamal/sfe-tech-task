@@ -2,10 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UsersListComponent } from './users-list.component';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+
 import { TokenService } from '../../../core/services/token.service';
 import { Component } from '@angular/core';
-import { fakeAsync, tick } from '@angular/core/testing';
 
 const mockUsers = [
   { id: 1, username: 'admin', role: 'admin' },
