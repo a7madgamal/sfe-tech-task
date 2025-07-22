@@ -2,6 +2,10 @@
   <mat-form-field appearance="fill">
     <mat-label>Username</mat-label>
     <input matInput formControlName="username" />
+    <mat-error *ngIf="username?.hasError('required') && username?.touched">Username is required</mat-error>
+    <mat-error *ngIf="username?.hasError('testNotAllowed') && username?.touched"
+      >Username cannot contain 'test'</mat-error
+    >
   </mat-form-field>
 
   <mat-form-field appearance="fill">
@@ -18,7 +22,7 @@
   </mat-form-field>
 
   <div class="actions">
-    <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">Save</button>
-    <button mat-stroked-button type="button" (click)="cancel.emit()">Cancel</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || disabled">Save</button>
+    <button mat-stroked-button type="button" (click)="cancel.emit()" [disabled]="disabled">Cancel</button>
   </div>
 </form>

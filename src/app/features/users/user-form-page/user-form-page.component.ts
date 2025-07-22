@@ -4,10 +4,12 @@ import { User } from '../../../shared/models/user';
 import { Router } from '@angular/router';
 import { UsersFacadeService } from '../../../core/facades/users-facade.service';
 import { MatError } from '@angular/material/form-field';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { firstValueFrom, filter } from 'rxjs';
 
 @Component({
   selector: 'app-user-form-page',
-  imports: [UserFormComponent, MatError],
+  imports: [UserFormComponent, MatError, MatProgressSpinnerModule],
   templateUrl: './user-form-page.component.html',
   styleUrl: './user-form-page.component.scss'
 })
@@ -19,9 +21,16 @@ export class UserFormPageComponent {
   loading = this.facade.loading;
   error = this.facade.error;
 
-  handleSave(user: Partial<User>) {
+  async handleSave(user: Partial<User>) {
     this.facade.saveUser(user);
-    this.goBack();
+    // Wait for loading to become false
+    while (this.loading()) {
+      await new Promise(resolve => setTimeout(resolve, 50));
+    }
+    if (!this.error()) {
+      this.goBack();
+    }
+    // If error, error message will be shown in template
   }
 
   goBack(): void {

@@ -18,7 +18,7 @@ export class UsersService {
   }
 
   addUser(user: Partial<User>): Observable<User> {
-    return this.http.post<User>(this.apiUrl, user);
+    return this.http.post<User>(`${this.apiUrl}/create`, user);
   }
 
   editUser(user: Partial<User>): Observable<User> {

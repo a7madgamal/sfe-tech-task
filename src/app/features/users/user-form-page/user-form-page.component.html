@@ -5,7 +5,7 @@
 }
 
 @if (!loading()) {
-  <app-user-form [user]="user()" (save)="handleSave($event)" (cancel)="goBack()" />
+  <app-user-form [user]="user()" (save)="handleSave($event)" (cancel)="goBack()" [disabled]="loading()" />
 } @else {
-  <p>Loading...</p>
+  <mat-spinner diameter="40"></mat-spinner>
 }
