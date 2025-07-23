@@ -31,17 +31,24 @@ import { passwordValidators } from '../../../shared/password-validators';
         <form [formGroup]="form" (ngSubmit)="submit()" #passwordForm="ngForm">
           <mat-form-field appearance="fill">
             <mat-label>New Password</mat-label>
-            <input matInput [type]="showNew() ? 'text' : 'password'" formControlName="newPassword" tabindex="1" />
+            <input
+              matInput
+              [type]="showNew() ? 'text' : 'password'"
+              formControlName="newPassword"
+              tabindex="1"
+              [errorStateMatcher]="matcher"
+              (input)="onFieldInput('newPassword')"
+            />
             <button mat-icon-button matSuffix type="button" (click)="toggleShowNew()" tabindex="2">
               <mat-icon>{{ showNew() ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
-            <mat-error *ngIf="form.get('newPassword')?.hasError('required') && form.get('newPassword')?.touched">
+            <mat-error *ngIf="form.get('newPassword')?.hasError('required') && form.get('newPassword')?.dirty">
               Password is required
             </mat-error>
-            <mat-error *ngIf="form.get('newPassword')?.hasError('minlength') && form.get('newPassword')?.touched">
+            <mat-error *ngIf="form.get('newPassword')?.hasError('minlength') && form.get('newPassword')?.dirty">
               Password must be at least 6 characters
             </mat-error>
-            <mat-error *ngIf="form.get('newPassword')?.hasError('numberRequired') && form.get('newPassword')?.touched">
+            <mat-error *ngIf="form.get('newPassword')?.hasError('numberRequired') && form.get('newPassword')?.dirty">
               Password must contain a number
             </mat-error>
           </mat-form-field>
@@ -53,13 +60,13 @@ import { passwordValidators } from '../../../shared/password-validators';
               [type]="showConfirm() ? 'text' : 'password'"
               formControlName="confirmPassword"
               tabindex="3"
+              [errorStateMatcher]="matcher"
+              (input)="onFieldInput('confirmPassword')"
             />
             <button mat-icon-button matSuffix type="button" (click)="toggleShowConfirm()" tabindex="4">
               <mat-icon>{{ showConfirm() ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
-            <mat-error
-              *ngIf="form.get('confirmPassword')?.hasError('required') && form.get('confirmPassword')?.touched"
-            >
+            <mat-error *ngIf="form.get('confirmPassword')?.hasError('required') && form.get('confirmPassword')?.dirty">
               Confirmation is required
             </mat-error>
           </mat-form-field>
@@ -216,6 +223,16 @@ export class ChangePasswordDialogComponent implements OnInit, OnDestroy {
         }
       });
       this.form.markAllAsTouched();
+    }
+  }
+
+  onFieldInput(field: 'newPassword' | 'confirmPassword') {
+    const control = this.form.get(field);
+    if (control && !control.dirty) {
+      control.markAsDirty();
+    }
+    if (control && !control.touched) {
+      control.markAsTouched();
     }
   }
 }

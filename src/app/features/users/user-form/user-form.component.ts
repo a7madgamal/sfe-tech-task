@@ -37,8 +37,7 @@ export class UserFormComponent {
   changePassword: OutputEmitterRef<void> = output();
 
   private fb = inject(FormBuilder);
-  private previousUser: User | null | undefined = null;
-  private previousCurrentUser: { id: number; username: string; role: string } | null | undefined = null;
+  // Removed previousUser and previousCurrentUser
 
   matcher: ErrorStateMatcher = new TouchedAndDirtyErrorStateMatcher();
 
@@ -53,15 +52,7 @@ export class UserFormComponent {
     this.form.patchValue({ role: 'user' }, { emitEvent: false });
 
     effect(() => {
-      const u = this.user();
-      const currentU = this.currentUser();
-
-      // Only update if the user actually changed OR if currentUser changed
-      if (u !== this.previousUser || currentU !== this.previousCurrentUser) {
-        this.previousUser = u;
-        this.previousCurrentUser = currentU;
-        this.updateForm();
-      }
+      this.updateForm();
     });
   }
 
@@ -76,8 +67,7 @@ export class UserFormComponent {
     const u = this.user();
     const canCreateAdmin = this.canCreateAdmin();
 
-    // Only update validators if the user context actually changes
-    if (u && u !== this.previousUser) {
+    if (u) {
       this.form.patchValue(
         {
           username: u.username,
@@ -87,15 +77,12 @@ export class UserFormComponent {
       );
       this.form.get('password')?.clearValidators();
       this.form.get('password')?.updateValueAndValidity({ emitEvent: false });
-    } else if (!u && this.previousUser !== null) {
+    } else {
       this.form.get('password')?.setValidators(passwordValidators());
       this.form.get('password')?.updateValueAndValidity({ emitEvent: false });
       // Do NOT patch the password field value here
       this.form.patchValue({ role: 'user' }, { emitEvent: false });
     }
-
-    // Debug: log password control state
-    // (Removed debug subscription logic for production)
 
     if (!canCreateAdmin) {
       this.form.get('role')?.disable({ emitEvent: false });
