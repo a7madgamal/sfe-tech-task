@@ -1,20 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class TokenService {
   private readonly TOKEN_KEY = 'auth_token';
   private readonly USER_KEY = 'auth_user';
 
+  private currentUserSignal = signal<{ id: number; username: string; role: string } | null>(this.getUser());
+
   setToken(token: string): void {
     sessionStorage.setItem(this.TOKEN_KEY, token);
   }
 
-  getToken(): string | null {
-    return sessionStorage.getItem(this.TOKEN_KEY);
-  }
-
   setUser(user: { id: number; username: string; role: string }): void {
     sessionStorage.setItem(this.USER_KEY, JSON.stringify(user));
+    this.currentUserSignal.set(user);
   }
 
   getUser(): { id: number; username: string; role: string } | null {
@@ -30,13 +29,16 @@ export class TokenService {
   clearToken(): void {
     sessionStorage.removeItem(this.TOKEN_KEY);
     sessionStorage.removeItem(this.USER_KEY);
+    this.currentUserSignal.set(null);
   }
 
-  /**
-   * Decodes the JWT and returns the current user object (id, username, role) if present and valid.
-   * Returns null if token is missing, malformed, or user info is not present/valid.
-   */
   getCurrentUser(): { id: number; username: string; role: string } | null {
-    return this.getUser();
+    return this.currentUserSignal();
   }
+
+  getToken(): string | null {
+    return sessionStorage.getItem(this.TOKEN_KEY);
+  }
+
+  currentUser = this.currentUserSignal.asReadonly();
 }

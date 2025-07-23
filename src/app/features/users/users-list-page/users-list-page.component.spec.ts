@@ -12,7 +12,9 @@ describe('UsersListPageComponent', () => {
   let tokenService: jasmine.SpyObj<TokenService>;
 
   beforeEach(async () => {
-    const tokenSpy = jasmine.createSpyObj('TokenService', ['getCurrentUser']);
+    const tokenSpy = jasmine.createSpyObj('TokenService', ['getCurrentUser'], {
+      currentUser: () => tokenSpy.getCurrentUser()
+    });
     tokenSpy.getCurrentUser.and.returnValue({ id: 1, username: 'admin', role: 'admin' });
 
     await TestBed.configureTestingModule({

@@ -32,8 +32,7 @@ export class AppComponent {
   private auth = inject(AuthService);
   private tokenService = inject(TokenService);
 
-  currentUser = computed(() => this.tokenService.getCurrentUser());
-
+  currentUser = this.tokenService.currentUser;
   isLoggedIn = computed(() => !!this.currentUser());
 
   logout(): void {
