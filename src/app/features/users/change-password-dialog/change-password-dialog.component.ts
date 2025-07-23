@@ -27,59 +27,63 @@ import { passwordValidators } from '../../../shared/password-validators';
     <div class="dialog-container">
       <h2 mat-dialog-title>Change Password</h2>
 
-      <mat-dialog-content>
-        <form [formGroup]="form" (ngSubmit)="submit()" #passwordForm="ngForm">
-          <mat-form-field appearance="fill">
-            <mat-label>New Password</mat-label>
-            <input
-              matInput
-              [type]="showNew() ? 'text' : 'password'"
-              formControlName="newPassword"
-              tabindex="1"
-              [errorStateMatcher]="matcher"
-              (input)="onFieldInput('newPassword')"
-            />
-            <button mat-icon-button matSuffix type="button" (click)="toggleShowNew()" tabindex="2">
-              <mat-icon>{{ showNew() ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-            <mat-error *ngIf="form.get('newPassword')?.hasError('required') && form.get('newPassword')?.dirty">
-              Password is required
-            </mat-error>
-            <mat-error *ngIf="form.get('newPassword')?.hasError('minlength') && form.get('newPassword')?.dirty">
-              Password must be at least 6 characters
-            </mat-error>
-            <mat-error *ngIf="form.get('newPassword')?.hasError('numberRequired') && form.get('newPassword')?.dirty">
-              Password must contain a number
-            </mat-error>
-          </mat-form-field>
+      <div class="dialog-scroll-wrapper">
+        <mat-dialog-content>
+          <form [formGroup]="form" (ngSubmit)="submit()" #passwordForm="ngForm">
+            <mat-form-field appearance="fill">
+              <mat-label>New Password</mat-label>
+              <input
+                matInput
+                [type]="showNew() ? 'text' : 'password'"
+                formControlName="newPassword"
+                tabindex="1"
+                [errorStateMatcher]="matcher"
+                (input)="onFieldInput('newPassword')"
+              />
+              <button mat-icon-button matSuffix type="button" (click)="toggleShowNew()" tabindex="2">
+                <mat-icon>{{ showNew() ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+              <mat-error *ngIf="form.get('newPassword')?.hasError('required') && form.get('newPassword')?.dirty">
+                Password is required
+              </mat-error>
+              <mat-error *ngIf="form.get('newPassword')?.hasError('minlength') && form.get('newPassword')?.dirty">
+                Password must be at least 6 characters
+              </mat-error>
+              <mat-error *ngIf="form.get('newPassword')?.hasError('numberRequired') && form.get('newPassword')?.dirty">
+                Password must contain a number
+              </mat-error>
+            </mat-form-field>
 
-          <mat-form-field appearance="fill">
-            <mat-label>Confirm Password</mat-label>
-            <input
-              matInput
-              [type]="showConfirm() ? 'text' : 'password'"
-              formControlName="confirmPassword"
-              tabindex="3"
-              [errorStateMatcher]="matcher"
-              (input)="onFieldInput('confirmPassword')"
-            />
-            <button mat-icon-button matSuffix type="button" (click)="toggleShowConfirm()" tabindex="4">
-              <mat-icon>{{ showConfirm() ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-            <mat-error *ngIf="form.get('confirmPassword')?.hasError('required') && form.get('confirmPassword')?.dirty">
-              Confirmation is required
-            </mat-error>
-          </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Confirm Password</mat-label>
+              <input
+                matInput
+                [type]="showConfirm() ? 'text' : 'password'"
+                formControlName="confirmPassword"
+                tabindex="3"
+                [errorStateMatcher]="matcher"
+                (input)="onFieldInput('confirmPassword')"
+              />
+              <button mat-icon-button matSuffix type="button" (click)="toggleShowConfirm()" tabindex="4">
+                <mat-icon>{{ showConfirm() ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+              <mat-error
+                *ngIf="form.get('confirmPassword')?.hasError('required') && form.get('confirmPassword')?.dirty"
+              >
+                Confirmation is required
+              </mat-error>
+            </mat-form-field>
 
-          <!-- Password mismatch error - separate from mat-error -->
-          <div
-            *ngIf="showPasswordMismatch()"
-            style="color: #f44336; font-size: 12px; margin-top: -16px; margin-bottom: 16px; padding-left: 16px;"
-          >
-            Passwords do not match
-          </div>
-        </form>
-      </mat-dialog-content>
+            <!-- Password mismatch error - separate from mat-error -->
+            <div
+              *ngIf="showPasswordMismatch()"
+              style="color: #f44336; font-size: 12px; margin-top: -16px; margin-bottom: 16px; padding-left: 16px;"
+            >
+              Passwords do not match
+            </div>
+          </form>
+        </mat-dialog-content>
+      </div>
 
       <mat-dialog-actions align="end">
         <button mat-stroked-button type="button" (click)="cancel()" tabindex="5">Cancel</button>
@@ -91,44 +95,55 @@ import { passwordValidators } from '../../../shared/password-validators';
   `,
   styles: [
     `
-      .dialog-container {
-        padding: 0;
-        min-width: 400px;
+      .dialog-scroll-wrapper {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: auto;
+        display: flex;
+        flex-direction: column;
+      }
+
+      @media (max-width: 600px) {
+        .dialog-scroll-wrapper {
+          max-height: 60vh;
+          min-height: 0;
+          overflow: auto;
+        }
       }
 
       mat-dialog-content {
-        padding: 20px 24px;
-        min-height: 280px;
+        padding: var(--spacing-lg) var(--spacing-md);
+        min-height: 200px;
+        flex: 1 1 auto;
+        min-height: 0;
       }
 
       mat-dialog-actions {
-        padding: 8px 24px 24px;
+        padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg);
         margin: 0;
       }
 
       mat-form-field {
         width: 100%;
-        margin-bottom: 32px;
+        margin-bottom: var(--spacing-md);
       }
-
       mat-form-field:last-of-type {
         margin-bottom: 0;
       }
 
       h2[mat-dialog-title] {
         margin: 0;
-        padding: 24px 24px 0;
-        margin-bottom: 16px;
+        padding: var(--spacing-lg) var(--spacing-md) 0;
+        margin-bottom: var(--spacing-md);
       }
 
-      /* Ensure error messages don't cause layout shifts */
       mat-error {
         font-size: 12px;
         line-height: 1.2;
         margin-top: 4px;
       }
 
-      /* Give consistent space for error messages */
+      /* Ensure error messages don't cause layout shifts */
       mat-form-field.mat-form-field-invalid {
         margin-bottom: 32px;
       }

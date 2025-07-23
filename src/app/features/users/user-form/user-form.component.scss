@@ -4,6 +4,27 @@ form {
   gap: var(--spacing-md);
   max-width: 600px;
   width: 100%;
+  padding: var(--spacing-lg) var(--spacing-md);
+  background: var(--color-background-subtle, #fff);
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: var(--spacing-md);
+}
+mat-form-field:last-of-type {
+  margin-bottom: 0;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border-light);
 }
 
 .change-password-section {
@@ -14,11 +35,30 @@ form {
   border-top: 1px solid var(--color-border-light);
 }
 
-.actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: var(--spacing-md);
-  margin-top: var(--spacing-lg);
-  padding-top: var(--spacing-md);
-  border-top: 1px solid var(--color-border-light);
+button[mat-flat-button],
+button[mat-stroked-button] {
+  min-width: 120px;
+}
+
+@media (max-width: 600px) {
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-sm);
+  }
+  .change-password-section {
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: var(--spacing-xs);
+    padding-top: var(--spacing-xs);
+  }
+  mat-form-field {
+    margin-bottom: var(--spacing-sm);
+  }
+  button {
+    width: 100%;
+    min-width: 0;
+  }
 }
