@@ -5,6 +5,13 @@
   margin-bottom: var(--spacing-md);
 }
 
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
 .error-message {
   max-width: 800px;
   box-sizing: border-box;

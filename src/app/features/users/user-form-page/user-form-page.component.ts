@@ -3,7 +3,6 @@ import { UserFormComponent } from '../user-form/user-form.component';
 import { User } from '../../../shared/models/user';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsersFacadeService } from '../../../core/facades/users-facade.service';
-import { MatError } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,7 +18,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   standalone: true,
   imports: [
     UserFormComponent,
-    MatError,
     MatProgressSpinnerModule,
     MatDialogModule,
     MatButtonModule,
@@ -49,12 +47,7 @@ export class UserFormPageComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.facade.loadUserById(Number(id));
-      // Fallback: if user not found, redirect after a short delay
-      setTimeout(() => {
-        if (this.error() === 'Failed to load user') {
-          this.router.navigate(['/users']);
-        }
-      }, 1500);
+      // Remove redirect on error; let user try again
     } else {
       // If creating, clear any previous user
       this.facade.clearUser();

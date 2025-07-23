@@ -31,13 +31,15 @@ export class UserFormComponent {
   user = input<User | null>();
   currentUser = input<{ id: number; username: string; role: string } | null>();
   @Input() disabled = false;
+  @Input() error: string | null = null;
 
   save: OutputEmitterRef<Partial<User>> = output();
   cancel: OutputEmitterRef<void> = output();
   changePassword: OutputEmitterRef<void> = output();
 
   private fb = inject(FormBuilder);
-  // Removed previousUser and previousCurrentUser
+  private lastUserRef: User | null | undefined = undefined;
+  private formInitialized = false;
 
   matcher: ErrorStateMatcher = new TouchedAndDirtyErrorStateMatcher();
 
@@ -48,11 +50,15 @@ export class UserFormComponent {
   });
 
   constructor(private ngZone: NgZone) {
-    // Initialize form with default values
-    this.form.patchValue({ role: 'user' }, { emitEvent: false });
-
     effect(() => {
-      this.updateForm();
+      const u = this.user();
+      // Only patch if the user object reference changes (edit mode)
+      // or on the very first mount (formInitialized === false)
+      if (!this.formInitialized || (u && u !== this.lastUserRef)) {
+        this.lastUserRef = u;
+        this.updateForm();
+        this.formInitialized = true;
+      }
     });
   }
 

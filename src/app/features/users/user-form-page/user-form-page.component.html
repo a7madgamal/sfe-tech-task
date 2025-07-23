@@ -1,8 +1,4 @@
 <div class="page-content">
-  @if (error()) {
-    <mat-error class="mat-accent error-message">{{ error() }}</mat-error>
-  }
-
   @if (!loading()) {
     <div class="form-container">
       <app-user-form
@@ -12,6 +8,7 @@
         (cancel)="goBack()"
         (changePassword)="openChangePasswordDialog()"
         [disabled]="loading()"
+        [error]="error() || null"
       />
     </div>
   } @else {

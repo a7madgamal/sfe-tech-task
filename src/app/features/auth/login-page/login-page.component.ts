@@ -50,8 +50,14 @@ export class LoginPageComponent {
         this.error.set('');
         this.router.navigate(['/users']);
       },
-      error: () => {
-        this.error.set('Invalid username or password');
+      error: err => {
+        if (err.status === 0) {
+          this.error.set('Could not reach server. Please try again later.');
+        } else if (err.status === 401) {
+          this.error.set('Invalid username or password');
+        } else {
+          this.error.set('Unexpected server error. Please try again.');
+        }
       }
     });
   }

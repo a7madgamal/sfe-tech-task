@@ -57,7 +57,7 @@ export class UsersFacadeService {
         this.store.setLoading(false);
       },
       error: () => {
-        this.store.setError('Failed to save user');
+        this.store.setError('Failed to save user. Please try again.');
         this.store.setLoading(false);
       }
     });

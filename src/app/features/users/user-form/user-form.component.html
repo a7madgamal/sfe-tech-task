@@ -6,6 +6,7 @@
       Edit User
     }
   </h3>
+  <!-- form fields start here -->
   <mat-form-field appearance="fill">
     <mat-label class="mat-accent">Username</mat-label>
     <input matInput formControlName="username" />
@@ -55,6 +56,12 @@
       Password must contain a number
     </mat-error>
   </mat-form-field>
+
+  @if (error) {
+    <mat-error class="mat-accent error-message">
+      {{ error }}
+    </mat-error>
+  }
 
   @if (user()?.id) {
     <div class="change-password-section">

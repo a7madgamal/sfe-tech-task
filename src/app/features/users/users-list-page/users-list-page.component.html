@@ -7,7 +7,12 @@
 
 <div class="container">
   @if (facade.error()) {
-    <mat-error class="error-message">{{ facade.error() }}</mat-error>
+    <div class="flex-center">
+      <mat-error class="error-message" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem">
+        <mat-icon class="error-icon">error</mat-icon>
+        <span>{{ facade.error() }}</span>
+      </mat-error>
+    </div>
   } @else if (facade.loading()) {
     <div class="flex-center">
       <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
