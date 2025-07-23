@@ -44,3 +44,34 @@ body {
   --mdc-filled-text-field-focus-active-label-color: #ff4081;
   --mdc-filled-text-field-input-text-color: #f3f3f3;
 }
+
+// Dialog fade-in/fade-out animation
+.mat-dialog-container {
+  animation: mat-dialog-fade-in 200ms var(--mat-animation-standard-easing) both;
+}
+
+@keyframes mat-dialog-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.mat-dialog-container.ng-animating.ng-leave {
+  animation: mat-dialog-fade-out 150ms var(--mat-animation-standard-easing) both;
+}
+
+@keyframes mat-dialog-fade-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}

@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-card class="login-card">
+  <mat-card class="login-card" *ngIf="showCard()" @loginCardFade (@loginCardFade.done)="onFadeDone($event)">
     <h2 class="mat-display-1" style="margin-bottom: 0.5rem">Welcome Back</h2>
     <form [formGroup]="form" (ngSubmit)="submit()">
       <mat-form-field appearance="fill">

@@ -1,79 +1,81 @@
-<form [formGroup]="form" (ngSubmit)="submit()">
-  <h3 class="mat-subheading-2" style="margin-bottom: 1rem">
-    @if (!user()?.id) {
-      Create User
-    } @else {
-      Edit User
-    }
-  </h3>
-  <!-- form fields start here -->
-  <mat-form-field appearance="fill">
-    <mat-label class="mat-accent">Username</mat-label>
-    <input matInput formControlName="username" />
-    <mat-error class="mat-accent" *ngIf="username?.hasError('required') && username?.touched"
-      >Username is required</mat-error
-    >
-    <mat-error class="mat-accent" *ngIf="username?.hasError('testNotAllowed') && username?.touched"
-      >Username cannot contain 'test'</mat-error
-    >
-  </mat-form-field>
-
-  <span
-    [matTooltip]="!canCreateAdmin() ? 'Only admins can create admin accounts' : ''"
-    matTooltipPosition="above"
-    matTooltipShowDelay="500"
-  >
+<div *ngIf="show()" @dialogFade (@dialogFade.done)="onFadeDone($event)">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <h3 class="mat-subheading-2" style="margin-bottom: 1rem">
+      @if (!user()?.id) {
+        Create User
+      } @else {
+        Edit User
+      }
+    </h3>
+    <!-- form fields start here -->
     <mat-form-field appearance="fill">
-      <mat-label class="mat-accent">Role</mat-label>
-      <mat-select formControlName="role">
-        <mat-option value="user">User</mat-option>
-        <mat-option value="admin">Admin</mat-option>
-      </mat-select>
+      <mat-label class="mat-accent">Username</mat-label>
+      <input matInput formControlName="username" />
+      <mat-error class="mat-accent" *ngIf="username?.hasError('required') && username?.touched"
+        >Username is required</mat-error
+      >
+      <mat-error class="mat-accent" *ngIf="username?.hasError('testNotAllowed') && username?.touched"
+        >Username cannot contain 'test'</mat-error
+      >
     </mat-form-field>
-  </span>
 
-  <mat-form-field appearance="fill" *ngIf="!user()?.id">
-    <mat-label class="mat-accent">Password</mat-label>
-    <input
-      matInput
-      type="password"
-      formControlName="password"
-      [errorStateMatcher]="matcher"
-      (focus)="onPasswordFocus()"
-      (input)="!form.get('password')?.dirty && form.get('password')?.markAsDirty()"
-      (blur)="form.get('password')?.markAsTouched()"
-    />
-    <mat-error class="mat-accent" *ngIf="form.get('password')?.hasError('required') && form.get('password')?.dirty">
-      Password is required
-    </mat-error>
-    <mat-error class="mat-accent" *ngIf="form.get('password')?.hasError('minlength') && form.get('password')?.dirty">
-      Password must be at least 6 characters
-    </mat-error>
-    <mat-error
-      class="mat-accent"
-      *ngIf="form.get('password')?.hasError('numberRequired') && form.get('password')?.dirty"
+    <span
+      [matTooltip]="!canCreateAdmin() ? 'Only admins can create admin accounts' : ''"
+      matTooltipPosition="above"
+      matTooltipShowDelay="500"
     >
-      Password must contain a number
-    </mat-error>
-  </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label class="mat-accent">Role</mat-label>
+        <mat-select formControlName="role">
+          <mat-option value="user">User</mat-option>
+          <mat-option value="admin">Admin</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </span>
 
-  @if (error) {
-    <mat-error class="mat-accent error-message">
-      {{ error }}
-    </mat-error>
-  }
+    <mat-form-field appearance="fill" *ngIf="!user()?.id">
+      <mat-label class="mat-accent">Password</mat-label>
+      <input
+        matInput
+        type="password"
+        formControlName="password"
+        [errorStateMatcher]="matcher"
+        (focus)="onPasswordFocus()"
+        (input)="!form.get('password')?.dirty && form.get('password')?.markAsDirty()"
+        (blur)="form.get('password')?.markAsTouched()"
+      />
+      <mat-error class="mat-accent" *ngIf="form.get('password')?.hasError('required') && form.get('password')?.dirty">
+        Password is required
+      </mat-error>
+      <mat-error class="mat-accent" *ngIf="form.get('password')?.hasError('minlength') && form.get('password')?.dirty">
+        Password must be at least 6 characters
+      </mat-error>
+      <mat-error
+        class="mat-accent"
+        *ngIf="form.get('password')?.hasError('numberRequired') && form.get('password')?.dirty"
+      >
+        Password must contain a number
+      </mat-error>
+    </mat-form-field>
 
-  @if (user()?.id) {
-    <div class="change-password-section">
-      <button mat-stroked-button type="button" (click)="changePassword.emit()" [disabled]="disabled">
-        <mat-icon>lock</mat-icon>
-        Change Password
-      </button>
+    @if (error) {
+      <mat-error class="mat-accent error-message">
+        {{ error }}
+      </mat-error>
+    }
+
+    @if (user()?.id) {
+      <div class="change-password-section">
+        <button mat-stroked-button type="button" (click)="changePassword.emit()" [disabled]="disabled">
+          <mat-icon>lock</mat-icon>
+          Change Password
+        </button>
+      </div>
+    }
+
+    <div class="actions">
+      <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || disabled">Save</button>
+      <button mat-stroked-button type="button" (click)="onCancel()" [disabled]="disabled">Cancel</button>
     </div>
-  }
-
-  <div class="actions">
-    <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || disabled">Save</button>
-    <button mat-stroked-button type="button" (click)="cancel.emit()" [disabled]="disabled">Cancel</button>
-  </div>
-</form>
+  </form>
+</div>

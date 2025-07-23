@@ -9,6 +9,7 @@ import { AuthService } from './core/services/auth.service';
 import { TokenService } from './core/services/token.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,18 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatToolbarModule
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  animations: [
+    trigger('routeFadeAnimation', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(24px) scale(0.98)' }),
+        animate('350ms cubic-bezier(0.4,0,0.2,1)', style({ opacity: 1, transform: 'none' }))
+      ]),
+      transition(':leave', [
+        animate('200ms cubic-bezier(0.4,0,0.2,1)', style({ opacity: 0, transform: 'translateY(24px) scale(0.98)' }))
+      ])
+    ])
+  ]
 })
 export class AppComponent {
   title = 'SFE Task - Ahmed Hassanein';

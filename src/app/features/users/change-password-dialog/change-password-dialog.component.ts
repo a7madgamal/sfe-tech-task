@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { TouchedAndDirtyErrorStateMatcher } from '../../../shared/always-error-state-matcher';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { passwordValidators } from '../../../shared/password-validators';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-change-password-dialog',
@@ -24,7 +25,7 @@ import { passwordValidators } from '../../../shared/password-validators';
     MatIconModule
   ],
   template: `
-    <div class="dialog-container">
+    <div class="dialog-container" *ngIf="show()" @dialogFade (@dialogFade.done)="onFadeDone($event)">
       <h2 mat-dialog-title>Change Password</h2>
 
       <div class="dialog-scroll-wrapper">
@@ -148,6 +149,17 @@ import { passwordValidators } from '../../../shared/password-validators';
         margin-bottom: 32px;
       }
     `
+  ],
+  animations: [
+    trigger('dialogFade', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'scale(0.98)' }),
+        animate('200ms cubic-bezier(0.4,0,0.2,1)', style({ opacity: 1, transform: 'scale(1)' }))
+      ]),
+      transition(':leave', [
+        animate('200ms cubic-bezier(0.4,0,0.2,1)', style({ opacity: 0, transform: 'scale(0.98)' }))
+      ])
+    ])
   ]
 })
 export class ChangePasswordDialogComponent implements OnInit, OnDestroy {
@@ -157,6 +169,7 @@ export class ChangePasswordDialogComponent implements OnInit, OnDestroy {
   showNew = signal(false);
   showConfirm = signal(false);
   showPasswordMismatch = signal(false);
+  show = signal(true);
   private formSubscription?: Subscription;
   matcher: ErrorStateMatcher = new TouchedAndDirtyErrorStateMatcher();
 
@@ -222,12 +235,12 @@ export class ChangePasswordDialogComponent implements OnInit, OnDestroy {
   }
 
   cancel(): void {
-    this.dialogRef.close();
+    this.show.set(false); // triggers fade-out
   }
 
   submit(): void {
     if (this.form.valid) {
-      this.dialogRef.close(this.form.value.newPassword);
+      this.show.set(false); // triggers fade-out
     } else {
       // Mark all fields as touched to show validation errors
       Object.keys(this.form.controls).forEach(key => {
@@ -248,6 +261,16 @@ export class ChangePasswordDialogComponent implements OnInit, OnDestroy {
     }
     if (control && !control.touched) {
       control.markAsTouched();
+    }
+  }
+
+  onFadeDone(event: any) {
+    if (event.toState === 'void') {
+      if (this.form.valid) {
+        this.dialogRef.close(this.form.value.newPassword);
+      } else {
+        this.dialogRef.close();
+      }
     }
   }
 }

@@ -11,6 +11,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { passwordValidators } from '../../../shared/password-validators';
 import { TouchedAndDirtyErrorStateMatcher } from '../../../shared/always-error-state-matcher';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { signal } from '@angular/core';
 
 @Component({
   selector: 'app-user-form',
@@ -25,7 +27,18 @@ import { ErrorStateMatcher } from '@angular/material/core';
     MatTooltipModule
   ],
   templateUrl: './user-form.component.html',
-  styleUrl: './user-form.component.scss'
+  styleUrl: './user-form.component.scss',
+  animations: [
+    trigger('dialogFade', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'scale(0.98)' }),
+        animate('200ms cubic-bezier(0.4,0,0.2,1)', style({ opacity: 1, transform: 'scale(1)' }))
+      ]),
+      transition(':leave', [
+        animate('200ms cubic-bezier(0.4,0,0.2,1)', style({ opacity: 0, transform: 'scale(0.98)' }))
+      ])
+    ])
+  ]
 })
 export class UserFormComponent {
   user = input<User | null>();
@@ -36,6 +49,8 @@ export class UserFormComponent {
   save: OutputEmitterRef<Partial<User>> = output();
   cancel: OutputEmitterRef<void> = output();
   changePassword: OutputEmitterRef<void> = output();
+
+  show = signal(true);
 
   private fb = inject(FormBuilder);
   private lastUserRef: User | null | undefined = undefined;
@@ -124,17 +139,29 @@ export class UserFormComponent {
       this.form.markAllAsTouched();
       return;
     }
+    this.show.set(false); // triggers fade-out
+  }
 
-    // Get form values, including disabled controls
-    const formValue = this.form.getRawValue();
-    const userData = { ...this.user(), ...formValue };
-
-    // For existing users, exclude password from the data
-    if (this.user()?.id) {
-      const { password, ...userDataWithoutPassword } = userData;
-      this.save.emit(userDataWithoutPassword as Partial<User>);
-    } else {
-      this.save.emit(userData as Partial<User>);
+  onFadeDone(event: any) {
+    if (event.toState === 'void') {
+      if (this.form.valid && this.form.dirty) {
+        // Only emit save if submit was called
+        const formValue = this.form.getRawValue();
+        const userData = { ...this.user(), ...formValue };
+        if (this.user()?.id) {
+          const { password, ...userDataWithoutPassword } = userData;
+          this.save.emit(userDataWithoutPassword as Partial<User>);
+        } else {
+          this.save.emit(userData as Partial<User>);
+        }
+      } else {
+        // If cancel was called, emit cancel
+        this.cancel.emit();
+      }
     }
+  }
+
+  onCancel() {
+    this.show.set(false); // triggers fade-out, will emit cancel after
   }
 }
