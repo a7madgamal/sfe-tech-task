@@ -37,6 +37,7 @@
 - **UI/UX:**
   - Ensure the app is usable and visually consistent.
   - Follow accessibility best practices where practical.
+  - When overriding Angular Material or theme styles, prefer using CSS custom properties (variables) such as --mat-app-text-color or other theme variables, rather than custom selectors or !important. This ensures better maintainability and theme compatibility.
 - **ESLint/code quality:**
   - When code smells or anti-patterns are detected, always consider and suggest appropriate ESLint rules to enforce better practices.
 

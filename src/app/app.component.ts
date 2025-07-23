@@ -7,15 +7,26 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthService } from './core/services/auth.service';
 import { TokenService } from './core/services/token.service';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule, MatButtonModule, MatIconModule, MatMenuModule, MatTooltipModule],
+  imports: [
+    RouterOutlet,
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    MatTooltipModule,
+    MatCardModule,
+    MatToolbarModule
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'SFE Tech Task';
+  title = 'SFE Task - Ahmed Hassanein';
 
   private router = inject(Router);
   private auth = inject(AuthService);

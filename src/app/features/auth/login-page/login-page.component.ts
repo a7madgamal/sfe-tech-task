@@ -7,10 +7,21 @@ import { Router } from '@angular/router';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { TokenService } from '../../../core/services/token.service';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-login-page',
-  imports: [MatFormField, MatInput, MatLabel, MatFormField, MatCard, ReactiveFormsModule, MatButton, MatIcon],
+  imports: [
+    MatFormField,
+    MatInput,
+    MatLabel,
+    MatFormField,
+    MatCard,
+    ReactiveFormsModule,
+    MatButton,
+    MatIcon,
+    MatToolbarModule
+  ],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss'
 })

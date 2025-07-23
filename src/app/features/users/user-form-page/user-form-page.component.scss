@@ -19,26 +19,11 @@
   }
 }
 
-.header-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
-}
-
-.back-button {
-  margin-right: var(--spacing-sm);
-}
-
 .form-container {
   max-width: 600px;
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .error-message {

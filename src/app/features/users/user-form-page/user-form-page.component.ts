@@ -12,6 +12,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
 import { AuthService } from '../../../core/services/auth.service';
 import { TokenService } from '../../../core/services/token.service';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-user-form-page',
@@ -23,7 +24,8 @@ import { TokenService } from '../../../core/services/token.service';
     MatDialogModule,
     MatButtonModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatToolbarModule
   ],
   templateUrl: './user-form-page.component.html',
   styleUrl: './user-form-page.component.scss'
