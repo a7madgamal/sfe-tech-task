@@ -2,31 +2,36 @@ Write-Host "Node version: $(node -v)"
 Write-Host "NPM version: $(npm -v)"
 
 Write-Host "Running lint-staged..."
-if (!(npx lint-staged)) {
+npx lint-staged
+if ($LASTEXITCODE -ne 0) {
   Write-Host "lint-staged failed. Commit aborted."
   exit 1
 }
 
 Write-Host "Running ng lint..."
-if (!(npm run lint)) {
+npm run lint
+if ($LASTEXITCODE -ne 0) {
   Write-Host "ng lint failed. Commit aborted."
   exit 1
 }
 
 Write-Host "Running Angular build type check..."
-if (!(npm run tsc)) {
+npm run tsc
+if ($LASTEXITCODE -ne 0) {
   Write-Host "Angular build/type check failed. Commit aborted."
   exit 1
 }
 
 Write-Host "Running tests..."
-if (!(npx ng test --browsers=ChromeHeadless --watch=false)) {
+npx ng test --browsers=ChromeHeadless --watch=false
+if ($LASTEXITCODE -ne 0) {
   Write-Host "Tests failed. Commit aborted."
   exit 1
 }
 
 Write-Host "Running prettier check..."
-if (!(npx prettier --check .)) {
+npx prettier --check .
+if ($LASTEXITCODE -ne 0) {
   Write-Host "Prettier check failed. Commit aborted."
   exit 1
-} 
+}

@@ -66,7 +66,6 @@ export class UserFormComponent {
 
   private ngZone = inject(NgZone);
   constructor() {
-    console.log('test git hook');
     effect(() => {
       const u = this.user();
       // Only patch if the user object reference changes (edit mode)
