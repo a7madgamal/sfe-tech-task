@@ -1,6 +1,23 @@
 <div class="app-header">
   <div class="container">
-    <h1 class="app-title">{{ title }}</h1>
+    <div class="header-content">
+      <h1 class="app-title">{{ title }}</h1>
+      @if (isLoggedIn) {
+        <div class="user-menu">
+          <button mat-button [matMenuTriggerFor]="userMenu" class="user-menu-trigger" matTooltip="User menu">
+            <mat-icon>account_circle</mat-icon>
+            <span class="username">{{ currentUser?.username }}</span>
+            <mat-icon>arrow_drop_down</mat-icon>
+          </button>
+          <mat-menu #userMenu="matMenu" class="user-menu-panel">
+            <button mat-menu-item (click)="logout()">
+              <mat-icon>logout</mat-icon>
+              <span>Logout</span>
+            </button>
+          </mat-menu>
+        </div>
+      }
+    </div>
   </div>
 </div>
 <div class="container">

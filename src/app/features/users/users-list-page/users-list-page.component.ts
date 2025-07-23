@@ -7,7 +7,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatError } from '@angular/material/form-field';
 import { OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-users-list-page',
@@ -18,7 +17,6 @@ import { AuthService } from '../../../core/services/auth.service';
 export class UsersListPageComponent implements OnInit {
   facade = inject(UsersFacadeService);
   router = inject(Router);
-  auth = inject(AuthService);
 
   ngOnInit(): void {
     this.facade.loadUsers();
@@ -34,10 +32,5 @@ export class UsersListPageComponent implements OnInit {
 
   deleteUser(id: number): void {
     this.facade.deleteUser(id);
-  }
-
-  logout(): void {
-    this.auth.logout();
-    this.router.navigate(['/auth']);
   }
 }
