@@ -46,9 +46,9 @@ export class UserFormComponent {
   @Input() disabled = false;
   @Input() error: string | null = null;
 
-  save: OutputEmitterRef<Partial<User>> = output();
-  cancel: OutputEmitterRef<void> = output();
-  changePassword: OutputEmitterRef<void> = output();
+  saveUser: OutputEmitterRef<Partial<User>> = output();
+  cancelUser: OutputEmitterRef<void> = output();
+  changeUserPassword: OutputEmitterRef<void> = output();
 
   show = signal(true);
 
@@ -64,7 +64,9 @@ export class UserFormComponent {
     password: ['', passwordValidators()]
   });
 
-  constructor(private ngZone: NgZone) {
+  private ngZone = inject(NgZone);
+  constructor() {
+    console.log('test git hook');
     effect(() => {
       const u = this.user();
       // Only patch if the user object reference changes (edit mode)
@@ -142,21 +144,32 @@ export class UserFormComponent {
     this.show.set(false); // triggers fade-out
   }
 
-  onFadeDone(event: any) {
+  onFadeDone(event: { toState: string }) {
     if (event.toState === 'void') {
       if (this.form.valid && this.form.dirty) {
         // Only emit save if submit was called
         const formValue = this.form.getRawValue();
         const userData = { ...this.user(), ...formValue };
+        // Ensure username, role, and password are strings (not null)
+        const safeUserData: Partial<User> = {
+          ...userData,
+          username: userData.username ?? '',
+          role: userData.role ?? '',
+          password: userData.password ?? undefined
+        };
         if (this.user()?.id) {
-          const { password, ...userDataWithoutPassword } = userData;
-          this.save.emit(userDataWithoutPassword as Partial<User>);
+          // Remove password for existing user
+          if ('password' in safeUserData) {
+            delete safeUserData.password;
+          }
+          this.saveUser.emit(safeUserData);
         } else {
-          this.save.emit(userData as Partial<User>);
+          // For new user, ensure password is included
+          this.saveUser.emit(safeUserData);
         }
       } else {
         // If cancel was called, emit cancel
-        this.cancel.emit();
+        this.cancelUser.emit();
       }
     }
   }

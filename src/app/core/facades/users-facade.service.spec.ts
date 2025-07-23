@@ -108,7 +108,7 @@ describe('UsersFacadeService', () => {
     usersService.addUser.and.returnValue(throwError(() => new Error('fail')));
     service.saveUser(user);
     expect(userStore.setLoading).toHaveBeenCalledWith(true);
-    expect(userStore.setError).toHaveBeenCalledWith('Failed to save user');
+    expect(userStore.setError).toHaveBeenCalledWith('Failed to save user. Please try again.');
     expect(userStore.setLoading).toHaveBeenCalledWith(false);
   });
 

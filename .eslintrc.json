@@ -10,6 +10,9 @@
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      },
       "rules": {
         "@angular-eslint/directive-selector": [
           "error",
@@ -26,13 +29,24 @@
             "prefix": "app",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "no-console": ["error", { "allow": ["warn", "error"] }],
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/no-base-to-string": "error",
+        "@typescript-eslint/consistent-type-assertions": ["error", { "assertionStyle": "never" }]
       }
     },
     {
       "files": ["*.html"],
       "extends": ["plugin:@angular-eslint/template/recommended", "plugin:@angular-eslint/template/accessibility"],
       "rules": {}
+    },
+    {
+      "files": ["*.spec.ts", "*.test.ts"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/consistent-type-assertions": "off"
+      }
     }
   ]
 }

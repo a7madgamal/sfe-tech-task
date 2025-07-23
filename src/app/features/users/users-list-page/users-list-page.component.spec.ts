@@ -40,14 +40,14 @@ describe('UsersListPageComponent', () => {
   it('should get current user from token service', () => {
     const mockUser = { id: 1, username: 'admin', role: 'admin' };
     tokenService.getCurrentUser.and.returnValue(mockUser);
-
-    expect(component.currentUser).toEqual(mockUser);
+    component.ngOnInit?.();
+    expect(component.currentUser()).toEqual(mockUser);
     expect(tokenService.getCurrentUser).toHaveBeenCalled();
   });
 
   it('should handle null current user', () => {
     tokenService.getCurrentUser.and.returnValue(null);
-
-    expect(component.currentUser).toBeNull();
+    component.ngOnInit?.();
+    expect(component.currentUser()).toBeNull();
   });
 });

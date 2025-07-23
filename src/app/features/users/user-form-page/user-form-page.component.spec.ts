@@ -5,10 +5,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { By } from '@angular/platform-browser';
+import { UserFormComponent } from '../user-form/user-form.component';
 
 import { UserFormPageComponent } from './user-form-page.component';
 import { UsersFacadeService } from '../../../core/facades/users-facade.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 describe('UserFormPageComponent', () => {
   let component: UserFormPageComponent;
@@ -41,6 +44,7 @@ describe('UserFormPageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [UserFormPageComponent, MatDialogModule, MatSnackBarModule, NoopAnimationsModule],
       providers: [
+        provideAnimations(),
         provideHttpClient(),
         provideHttpClientTesting(),
         { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: () => '1' } } } },
@@ -81,6 +85,7 @@ describe('UserFormPageComponent', () => {
     TestBed.configureTestingModule({
       imports: [UserFormPageComponent, MatDialogModule, MatSnackBarModule, NoopAnimationsModule],
       providers: [
+        provideAnimations(),
         provideHttpClient(),
         provideHttpClientTesting(),
         { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: () => null } } } },
@@ -109,6 +114,19 @@ describe('UserFormPageComponent', () => {
 
   it('should navigate back on goBack', () => {
     component.goBack();
+    expect(router.navigate).toHaveBeenCalledWith(['/users']);
+  });
+
+  it('should navigate back when cancelUser is emitted from the form', () => {
+    // Find the child component using By.directive
+    const userFormDebug = fixture.debugElement.query(By.directive(UserFormComponent));
+    expect(userFormDebug).toBeTruthy();
+    // Spy on goBack
+    const goBackSpy = spyOn(component, 'goBack').and.callThrough();
+    // Emit cancelUser from the child
+    userFormDebug.componentInstance.cancelUser.emit();
+    fixture.detectChanges();
+    expect(goBackSpy).toHaveBeenCalled();
     expect(router.navigate).toHaveBeenCalledWith(['/users']);
   });
 

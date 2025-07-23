@@ -117,6 +117,7 @@ describe('ChangePasswordDialogComponent', () => {
 
   it('should close dialog on cancel', () => {
     component.cancel();
+    component.onFadeDone({ toState: 'void' });
     expect(dialogRef.close).toHaveBeenCalled();
   });
 
@@ -125,8 +126,8 @@ describe('ChangePasswordDialogComponent', () => {
       newPassword: 'password123',
       confirmPassword: 'password123'
     });
-
     component.submit();
+    component.onFadeDone({ toState: 'void' });
     expect(dialogRef.close).toHaveBeenCalledWith('password123');
   });
 

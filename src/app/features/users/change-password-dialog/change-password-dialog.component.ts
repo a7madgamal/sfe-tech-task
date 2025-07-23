@@ -1,6 +1,6 @@
 import { Component, inject, signal, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -194,8 +194,8 @@ export class ChangePasswordDialogComponent implements OnInit, OnDestroy {
 
     // Focus the first field when dialog opens
     setTimeout(() => {
-      const firstInput = document.querySelector('input[tabindex="1"]') as HTMLInputElement;
-      if (firstInput) {
+      const firstInput = document.querySelector('input[tabindex="1"]');
+      if (firstInput instanceof HTMLInputElement) {
         firstInput.focus();
       }
     }, 100);
@@ -220,7 +220,7 @@ export class ChangePasswordDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  passwordsMatchValidator(group: any) {
+  passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {
     const pw = group.get('newPassword')?.value;
     const confirm = group.get('confirmPassword')?.value;
     return pw === confirm ? null : { passwordMismatch: true };
@@ -264,7 +264,7 @@ export class ChangePasswordDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  onFadeDone(event: any) {
+  onFadeDone(event: { toState: string }): void {
     if (event.toState === 'void') {
       if (this.form.valid) {
         this.dialogRef.close(this.form.value.newPassword);

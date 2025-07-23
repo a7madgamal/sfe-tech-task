@@ -1,11 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, signal } from '@angular/core';
 import { User } from '../../../shared/models/user';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { UserFormComponent } from './user-form.component';
 
 @Component({
-  selector: 'host-test',
+  selector: 'app-host-test',
   template: `<app-user-form [user]="user()" [currentUser]="currentUser()" />`,
   standalone: true,
   imports: [UserFormComponent]
@@ -21,7 +22,8 @@ describe('UserFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserFormComponent]
+      imports: [UserFormComponent],
+      providers: [provideAnimations()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(UserFormComponent);
@@ -47,7 +49,8 @@ describe('UserFormComponent', () => {
   });
 
   it('should be valid with proper values for new user', () => {
-    component.form.setValue({ username: 'alice', role: 'admin', password: 'pass' });
+    component.form.setValue({ username: 'alice', role: 'admin', password: 'Password123!' });
+    component.form.updateValueAndValidity();
     expect(component.form.valid).toBeTrue();
   });
 
@@ -61,35 +64,45 @@ describe('UserFormComponent', () => {
     expect(formComponent.form.valid).toBeTrue();
   });
 
-  it('should emit save event with user data including password for new user', () => {
-    spyOn(component.save, 'emit');
-    component.form.setValue({ username: 'alice', role: 'admin', password: 'pass' });
+  it('should emit saveUser event with user data including password for new user', () => {
+    spyOn(component.saveUser, 'emit');
+    component.form.setValue({ username: 'alice', role: 'admin', password: 'Password123!' });
+    component.form.updateValueAndValidity();
+    component.form.markAsDirty();
     component.submit();
-    expect(component.save.emit).toHaveBeenCalledWith(
-      jasmine.objectContaining({ username: 'alice', role: 'admin', password: 'pass' })
+    component.onFadeDone({ toState: 'void' });
+    expect(component.saveUser.emit).toHaveBeenCalledWith(
+      jasmine.objectContaining({ username: 'alice', role: 'admin', password: 'Password123!' })
     );
   });
 
-  it('should emit save event without password for existing user', () => {
+  it('should emit saveUser event without password for existing user', () => {
     const hostFixture = TestBed.createComponent(HostTestComponent);
     const host = hostFixture.componentInstance;
     const formComponent = hostFixture.debugElement.children[0].componentInstance as UserFormComponent;
-    spyOn(formComponent.save, 'emit');
+    spyOn(formComponent.saveUser, 'emit');
     host.user.set({ id: 1, username: 'alice', role: 'admin' });
     hostFixture.detectChanges();
     formComponent.form.setValue({ username: 'alice', role: 'admin', password: 'oldpass' });
+    formComponent.form.updateValueAndValidity();
+    formComponent.form.markAsDirty();
     formComponent.submit();
-    const emittedData = (formComponent.save.emit as jasmine.Spy).calls.mostRecent().args[0];
+    formComponent.onFadeDone({ toState: 'void' });
+    const emittedData = (formComponent.saveUser.emit as jasmine.Spy).calls.mostRecent()?.args[0];
+    expect(emittedData).toBeDefined();
     expect(emittedData.username).toBe('alice');
     expect(emittedData.role).toBe('admin');
     expect(emittedData.password).toBeUndefined();
   });
 
-  it('should not emit save event when form is invalid', () => {
-    spyOn(component.save, 'emit');
+  it('should not emit saveUser event when form is invalid', () => {
+    spyOn(component.saveUser, 'emit');
     component.form.setValue({ username: '', role: '', password: '' });
+    component.form.updateValueAndValidity();
+    component.form.markAsDirty();
     component.submit();
-    expect(component.save.emit).not.toHaveBeenCalled();
+    component.onFadeDone({ toState: 'void' });
+    expect(component.saveUser.emit).not.toHaveBeenCalled();
   });
 
   it('should patch form values when user input changes (via host)', async () => {
@@ -163,5 +176,17 @@ describe('UserFormComponent', () => {
 
     // Check that role control is enabled for admin users
     expect(formComponent.form.get('role')?.disabled).toBeFalse();
+  });
+
+  it('should emit cancelUser event when cancel is triggered in edit mode', () => {
+    const hostFixture = TestBed.createComponent(HostTestComponent);
+    const host = hostFixture.componentInstance;
+    const formComponent = hostFixture.debugElement.children[0].componentInstance as UserFormComponent;
+    spyOn(formComponent.cancelUser, 'emit');
+    host.user.set({ id: 1, username: 'alice', role: 'admin' }); // simulate edit mode
+    hostFixture.detectChanges();
+    formComponent.onCancel();
+    formComponent.onFadeDone({ toState: 'void' });
+    expect(formComponent.cancelUser.emit).toHaveBeenCalled();
   });
 });

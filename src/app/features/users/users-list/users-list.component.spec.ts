@@ -13,7 +13,7 @@ const adminUser = { id: 1, username: 'admin', role: 'admin' };
 const normalUser = { id: 2, username: 'user1', role: 'user' };
 
 @Component({
-  selector: 'host-users-list-test',
+  selector: 'app-host-users-list-test',
   template: `<app-users-list [users]="users" [currentUser]="currentUser"></app-users-list>`,
   standalone: true,
   imports: [UsersListComponent]
@@ -108,17 +108,18 @@ describe('UsersListComponent', () => {
     expect(editButtons[0].nativeElement.disabled).toBeFalse(); // admin user button should be enabled
   });
 
-  // Skipped due to Angular Material table rendering flakiness in tests. The table and rows are present in the DOM (see debug output), but querySelectorAll returns 0. This is a known issue with Material tables and signals in tests.
-  xit('should render user rows if users are present', async () => {
+  it('should render user rows if users are present', async () => {
     hostComponent.users = mockUsers;
     hostFixture.detectChanges();
     await hostFixture.whenStable();
-    const rows = hostFixture.nativeElement.querySelectorAll('tr.mat-row');
+    hostFixture.detectChanges();
+    await hostFixture.whenStable();
+    hostFixture.detectChanges();
+    const rows = hostFixture.debugElement.queryAll(By.css('tr.mat-mdc-row'));
     expect(rows.length).toBe(mockUsers.length);
     mockUsers.forEach((user, idx) => {
-      expect(rows[idx].textContent).toContain(user.username);
-      // Check for the role chip
-      expect(rows[idx].textContent).toContain(user.role);
+      expect(rows[idx].nativeElement.textContent).toContain(user.username);
+      expect(rows[idx].nativeElement.textContent).toContain(user.role);
     });
   });
 });

@@ -4,8 +4,8 @@
       <app-user-form
         [user]="user()"
         [currentUser]="currentUser()"
-        (save)="handleSave($event)"
-        (cancel)="goBack()"
+        (saveUser)="handleSave($event)"
+        (cancelUser)="goBack()"
         (changePassword)="openChangePasswordDialog()"
         [disabled]="loading()"
         [error]="error() || null"

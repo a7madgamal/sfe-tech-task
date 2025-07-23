@@ -66,7 +66,7 @@
 
     @if (user()?.id) {
       <div class="change-password-section">
-        <button mat-stroked-button type="button" (click)="changePassword.emit()" [disabled]="disabled">
+        <button mat-stroked-button type="button" (click)="changeUserPassword.emit()" [disabled]="disabled">
           <mat-icon>lock</mat-icon>
           Change Password
         </button>
