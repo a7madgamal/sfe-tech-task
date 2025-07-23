@@ -29,8 +29,4 @@ export class UsersListPageComponent implements OnInit {
   goToEdit(id: number): void {
     this.router.navigate(['/users', id]);
   }
-
-  deleteUser(id: number): void {
-    this.facade.deleteUser(id);
-  }
 }

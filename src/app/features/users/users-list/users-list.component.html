@@ -1,7 +1,7 @@
-@if (!users()?.length) {
+@if (!users().length) {
   <p>No users found.</p>
 } @else {
-  <table mat-table [dataSource]="users() ?? []" class="mat-elevation-z1 users-table">
+  <table mat-table [dataSource]="users()" class="mat-elevation-z1 users-table">
     <ng-container matColumnDef="username">
       <th mat-header-cell *matHeaderCellDef>Username</th>
       <td mat-cell *matCellDef="let user">{{ user.username }}</td>
@@ -17,21 +17,6 @@
       <td mat-cell *matCellDef="let user">
         <button mat-icon-button color="primary" (click)="edit.emit(user.id)">
           <mat-icon>edit</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          color="warn"
-          (click)="delete.emit(user.id)"
-          [disabled]="!currentUser || currentUser.role !== 'admin' || currentUser.id === user.id"
-          [matTooltip]="
-            currentUser?.id === user.id
-              ? 'Cannot delete yourself'
-              : currentUser?.role !== 'admin'
-                ? 'Only admin can delete users'
-                : 'Delete user'
-          "
-        >
-          <mat-icon>delete</mat-icon>
         </button>
       </td>
     </ng-container>

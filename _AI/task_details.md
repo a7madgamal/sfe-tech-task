@@ -58,7 +58,7 @@
 
 - [x] 3.1 User listing
   - [x] 3.1.1 Implement user list display
-  - [x] 3.1.2 Add edit and delete links or buttons (use Angular Material 17+ button/icon best practices)
+  - [x] 3.1.2 Add edit links or buttons (use Angular Material 17+ button/icon best practices)
   - [x] 3.1.3 Handle empty state (show message when no users)
   - [x] 3.1.4 Handle error state (show error message on API failure)
   - [x] 3.1.5 Show loading indicator while fetching users
@@ -125,7 +125,7 @@ Update this file as you progress. Use checkboxes to track completion. Keep summa
 
 # Open Questions
 
-- [ ] Backend does not support deleting users (DELETE /api/users/:id). This is required for full user management functionality.
+- [x] Backend does not support deleting users (DELETE /api/users/:id). Delete functionality has been removed from the frontend to match backend capabilities.
 
 ---
 

@@ -11,6 +11,6 @@
       <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
     </div>
   } @else {
-    <app-users-list [users]="facade.users()" (edit)="goToEdit($event)" (delete)="deleteUser($event)" />
+    <app-users-list [users]="facade.users()" (edit)="goToEdit($event)" />
   }
 </div>

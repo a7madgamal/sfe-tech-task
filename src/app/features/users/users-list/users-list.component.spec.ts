@@ -1,29 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UsersListComponent } from './users-list.component';
-import { By } from '@angular/platform-browser';
-
-import { TokenService } from '../../../core/services/token.service';
 import { Component } from '@angular/core';
 
 const mockUsers = [
   { id: 1, username: 'admin', role: 'admin' },
   { id: 2, username: 'user1', role: 'user' }
 ];
-
-const adminUser = { id: 1, username: 'admin', role: 'admin' };
-const normalUser = { id: 2, username: 'user1', role: 'user' };
-
-// Mock TokenService
-class MockTokenService {
-  private user: any = adminUser;
-  getCurrentUser() {
-    return this.user;
-  }
-  setMockUser(user: any) {
-    this.user = user;
-  }
-}
 
 @Component({
   selector: 'host-users-list-test',
@@ -38,17 +21,14 @@ class HostTestComponent {
 describe('UsersListComponent', () => {
   let hostFixture: ComponentFixture<HostTestComponent>;
   let hostComponent: HostTestComponent;
-  let tokenService: MockTokenService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HostTestComponent],
-      providers: [{ provide: TokenService, useClass: MockTokenService }]
+      imports: [HostTestComponent]
     }).compileComponents();
 
     hostFixture = TestBed.createComponent(HostTestComponent);
     hostComponent = hostFixture.componentInstance;
-    tokenService = TestBed.inject(TokenService) as any;
     hostFixture.detectChanges();
   });
 
@@ -75,23 +55,5 @@ describe('UsersListComponent', () => {
       // Check for the role chip
       expect(rows[idx].textContent).toContain(user.role);
     });
-  });
-
-  it('should disable delete button for current user', () => {
-    hostComponent.users = mockUsers;
-    tokenService.setMockUser(adminUser);
-    hostFixture.detectChanges();
-    const deleteButtons = hostFixture.debugElement.queryAll(By.css('button[color="warn"]'));
-    expect(deleteButtons[0].nativeElement.disabled).toBeTrue(); // admin cannot delete self
-    expect(deleteButtons[1].nativeElement.disabled).toBeFalse(); // admin can delete user
-  });
-
-  it('should disable delete button for non-admins', () => {
-    hostComponent.users = mockUsers;
-    tokenService.setMockUser(normalUser);
-    hostFixture.detectChanges();
-    const deleteButtons = hostFixture.debugElement.queryAll(By.css('button[color="warn"]'));
-    expect(deleteButtons[0].nativeElement.disabled).toBeTrue();
-    expect(deleteButtons[1].nativeElement.disabled).toBeTrue();
   });
 });

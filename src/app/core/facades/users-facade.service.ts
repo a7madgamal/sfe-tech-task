@@ -64,20 +64,6 @@ export class UsersFacadeService {
     });
   }
 
-  deleteUser(id: number): void {
-    this.store.setLoading(true);
-    this.api.deleteUser(id).subscribe({
-      next: () => {
-        this.store.deleteUser(id);
-        this.store.setLoading(false);
-      },
-      error: () => {
-        this.store.setError('Failed to delete user');
-        this.store.setLoading(false);
-      }
-    });
-  }
-
   updateUserPassword(userId: number, newPassword: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this.store.setLoading(true);

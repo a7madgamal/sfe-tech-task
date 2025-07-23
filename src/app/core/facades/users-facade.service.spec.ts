@@ -18,17 +18,9 @@ describe('UsersFacadeService', () => {
       'getUsers',
       'addUser',
       'editUser',
-      'deleteUser',
       'updateUserPassword'
     ]);
-    userStore = jasmine.createSpyObj('UserStore', [
-      'setUser',
-      'setUsers',
-      'setLoading',
-      'setError',
-      'upsertUser',
-      'deleteUser'
-    ]);
+    userStore = jasmine.createSpyObj('UserStore', ['setUser', 'setUsers', 'setLoading', 'setError', 'upsertUser']);
     // Mock asReadonly for signals
     userStore.users = { asReadonly: () => of([]) } as any;
     userStore.user = { asReadonly: () => of(null) } as any;
@@ -117,23 +109,6 @@ describe('UsersFacadeService', () => {
     service.saveUser(user);
     expect(userStore.setLoading).toHaveBeenCalledWith(true);
     expect(userStore.setError).toHaveBeenCalledWith('Failed to save user');
-    expect(userStore.setLoading).toHaveBeenCalledWith(false);
-  });
-
-  it('should delete user and update store on success', () => {
-    usersService.deleteUser.and.returnValue(of(void 0));
-    service.deleteUser(1);
-    expect(userStore.setLoading).toHaveBeenCalledWith(true);
-    expect(usersService.deleteUser).toHaveBeenCalledWith(1);
-    expect(userStore.deleteUser).toHaveBeenCalledWith(1);
-    expect(userStore.setLoading).toHaveBeenCalledWith(false);
-  });
-
-  it('should set error on deleteUser failure', () => {
-    usersService.deleteUser.and.returnValue(throwError(() => new Error('fail')));
-    service.deleteUser(1);
-    expect(userStore.setLoading).toHaveBeenCalledWith(true);
-    expect(userStore.setError).toHaveBeenCalledWith('Failed to delete user');
     expect(userStore.setLoading).toHaveBeenCalledWith(false);
   });
 

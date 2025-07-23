@@ -80,14 +80,6 @@ describe('UsersService', () => {
     req.flush(expectedResponse);
   });
 
-  it('should DELETE to /api/users/:id when deleteUser is called', () => {
-    service.deleteUser(1).subscribe();
-
-    const req = httpMock.expectOne('api/users/1');
-    expect(req.request.method).toBe('DELETE');
-    req.flush(null);
-  });
-
   it('should PUT to /api/users/:id with password when updateUserPassword is called', () => {
     const userId = 1;
     const newPassword = 'newpassword123';
