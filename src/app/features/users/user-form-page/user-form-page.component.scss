@@ -42,10 +42,14 @@
 }
 
 .error-message {
+  max-width: 600px;
+  box-sizing: border-box;
   margin-bottom: var(--spacing-md);
   padding: var(--spacing-md);
   border-radius: 4px;
   background-color: var(--color-error-light);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 // Override page content padding for form pages

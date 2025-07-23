@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, computed } from '@angular/core';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { User } from '../../../shared/models/user';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -11,9 +11,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
 import { AuthService } from '../../../core/services/auth.service';
+import { TokenService } from '../../../core/services/token.service';
 
 @Component({
   selector: 'app-user-form-page',
+  standalone: true,
   imports: [
     UserFormComponent,
     MatError,
@@ -33,10 +35,13 @@ export class UserFormPageComponent implements OnInit {
   private dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
   private authService = inject(AuthService);
+  private tokenService = inject(TokenService);
 
   user = this.facade.user;
   loading = this.facade.loading;
   error = this.facade.error;
+
+  currentUser = computed(() => this.tokenService.getCurrentUser());
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');

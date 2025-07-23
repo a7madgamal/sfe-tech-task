@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { RouterOutlet, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,13 +21,9 @@ export class AppComponent {
   private auth = inject(AuthService);
   private tokenService = inject(TokenService);
 
-  get currentUser() {
-    return this.tokenService.getCurrentUser();
-  }
+  currentUser = computed(() => this.tokenService.getCurrentUser());
 
-  get isLoggedIn() {
-    return !!this.currentUser;
-  }
+  isLoggedIn = computed(() => !!this.currentUser());
 
   logout(): void {
     this.auth.logout();

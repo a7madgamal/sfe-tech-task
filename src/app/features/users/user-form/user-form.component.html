@@ -8,13 +8,19 @@
     >
   </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Role</mat-label>
-    <mat-select formControlName="role">
-      <mat-option value="admin">Admin</mat-option>
-      <mat-option value="user">User</mat-option>
-    </mat-select>
-  </mat-form-field>
+  <span
+    [matTooltip]="!canCreateAdmin() ? 'Only admins can create admin accounts' : ''"
+    matTooltipPosition="above"
+    matTooltipShowDelay="500"
+  >
+    <mat-form-field appearance="fill">
+      <mat-label>Role</mat-label>
+      <mat-select formControlName="role">
+        <mat-option value="user">User</mat-option>
+        <mat-option value="admin">Admin</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </span>
 
   <mat-form-field appearance="fill" *ngIf="!user()?.id">
     <mat-label>Password</mat-label>

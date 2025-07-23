@@ -15,9 +15,15 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Actions</th>
       <td mat-cell *matCellDef="let user">
-        <button mat-icon-button color="primary" (click)="edit.emit(user.id)">
-          <mat-icon>edit</mat-icon>
-        </button>
+        <span
+          [matTooltip]="canEditUser(user) ? 'Edit user' : 'Only admins can edit admin users'"
+          matTooltipPosition="above"
+          matTooltipShowDelay="500"
+        >
+          <button mat-icon-button color="primary" (click)="edit.emit(user.id)" [disabled]="!canEditUser(user)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </span>
       </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="['username', 'role', 'actions']"></tr>

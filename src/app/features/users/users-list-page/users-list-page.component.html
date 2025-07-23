@@ -5,12 +5,12 @@
 
 <div class="page-content">
   @if (facade.error()) {
-    <mat-error>{{ facade.error() }}</mat-error>
+    <mat-error class="error-message">{{ facade.error() }}</mat-error>
   } @else if (facade.loading()) {
     <div class="flex-center">
       <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
     </div>
   } @else {
-    <app-users-list [users]="facade.users()" (edit)="goToEdit($event)" />
+    <app-users-list [users]="facade.users()" [currentUser]="currentUser()" (edit)="goToEdit($event)" />
   }
 </div>

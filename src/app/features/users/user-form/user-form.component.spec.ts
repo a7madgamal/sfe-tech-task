@@ -6,12 +6,13 @@ import { UserFormComponent } from './user-form.component';
 
 @Component({
   selector: 'host-test',
-  template: `<app-user-form [user]="user()" />`,
+  template: `<app-user-form [user]="user()" [currentUser]="currentUser()" />`,
   standalone: true,
   imports: [UserFormComponent]
 })
 class HostTestComponent {
   user = signal<User | null>(null);
+  currentUser = signal<{ id: number; username: string; role: string } | null>(null);
 }
 
 describe('UserFormComponent', () => {
@@ -96,14 +97,71 @@ describe('UserFormComponent', () => {
     const host = hostFixture.componentInstance;
     hostFixture.detectChanges();
     const formComponent = hostFixture.debugElement.children[0].componentInstance as UserFormComponent;
-    // Initially empty
-    expect(formComponent.form.value).toEqual({ username: '', role: '', password: '' });
+    // Initially should have default role for new user
+    expect(formComponent.form.getRawValue().role).toBe('user');
     // Simulate edit mode
     host.user.set({ id: 1, username: 'bob', role: 'admin' });
     hostFixture.detectChanges();
     await new Promise(r => setTimeout(r, 0));
-    expect(formComponent.form.value.username).toBe('bob');
-    expect(formComponent.form.value.role).toBe('admin');
-    expect(formComponent.form.value.password).toBe(''); // Password should be empty for existing users
+    expect(formComponent.form.getRawValue().username).toBe('bob');
+    expect(formComponent.form.getRawValue().role).toBe('admin');
+    expect(formComponent.form.getRawValue().password).toBe(''); // Password should be empty for existing users
+  });
+
+  it('should allow admin users to create admin accounts', () => {
+    const hostFixture = TestBed.createComponent(HostTestComponent);
+    const host = hostFixture.componentInstance;
+    const formComponent = hostFixture.debugElement.children[0].componentInstance as UserFormComponent;
+    host.currentUser.set({ id: 1, username: 'admin', role: 'admin' });
+    hostFixture.detectChanges();
+    expect(formComponent.canCreateAdmin()).toBeTrue();
+    expect(formComponent.getRoleTooltip()).toBe('Select the user role');
+  });
+
+  it('should not allow normal users to create admin accounts', () => {
+    const hostFixture = TestBed.createComponent(HostTestComponent);
+    const host = hostFixture.componentInstance;
+    const formComponent = hostFixture.debugElement.children[0].componentInstance as UserFormComponent;
+    host.currentUser.set({ id: 2, username: 'user', role: 'user' });
+    hostFixture.detectChanges();
+    expect(formComponent.canCreateAdmin()).toBeFalse();
+    expect(formComponent.getRoleTooltip()).toBe('Only admins can create admin accounts');
+  });
+
+  it('should handle null current user', () => {
+    const hostFixture = TestBed.createComponent(HostTestComponent);
+    const host = hostFixture.componentInstance;
+    const formComponent = hostFixture.debugElement.children[0].componentInstance as UserFormComponent;
+    host.currentUser.set(null);
+    hostFixture.detectChanges();
+    expect(formComponent.canCreateAdmin()).toBeFalse();
+    expect(formComponent.getRoleTooltip()).toBe('Only admins can create admin accounts');
+  });
+
+  it('should set default role to user for new users', () => {
+    const hostFixture = TestBed.createComponent(HostTestComponent);
+    const host = hostFixture.componentInstance;
+    const formComponent = hostFixture.debugElement.children[0].componentInstance as UserFormComponent;
+
+    // Set current user as non-admin
+    host.currentUser.set({ id: 2, username: 'user', role: 'user' });
+    hostFixture.detectChanges();
+
+    // Check that role defaults to 'user' and is disabled
+    expect(formComponent.form.getRawValue().role).toBe('user');
+    expect(formComponent.form.get('role')?.disabled).toBeTrue();
+  });
+
+  it('should enable role control for admin users', () => {
+    const hostFixture = TestBed.createComponent(HostTestComponent);
+    const host = hostFixture.componentInstance;
+    const formComponent = hostFixture.debugElement.children[0].componentInstance as UserFormComponent;
+
+    // Set current user as admin
+    host.currentUser.set({ id: 1, username: 'admin', role: 'admin' });
+    hostFixture.detectChanges();
+
+    // Check that role control is enabled for admin users
+    expect(formComponent.form.get('role')?.disabled).toBeFalse();
   });
 });

@@ -18,6 +18,7 @@
     <div class="form-container">
       <app-user-form
         [user]="user()"
+        [currentUser]="currentUser()"
         (save)="handleSave($event)"
         (cancel)="goBack()"
         (changePassword)="openChangePasswordDialog()"

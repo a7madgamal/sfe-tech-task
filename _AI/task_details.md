@@ -59,6 +59,10 @@
 - [x] 3.1 User listing
   - [x] 3.1.1 Implement user list display
   - [x] 3.1.2 Add edit links or buttons (use Angular Material 17+ button/icon best practices)
+  - [x] 3.1.2.1 Prevent non-admin users from editing admin accounts
+  - [x] 3.1.2.2 Add tooltips to explain edit restrictions (working on disabled buttons)
+  - [x] 3.1.2.3 Disable edit buttons for restricted users
+  - [x] 3.1.2.4 Prevent non-admin users from creating admin accounts (default to user role, select input fully disabled for non-admins)
   - [x] 3.1.3 Handle empty state (show message when no users)
   - [x] 3.1.4 Handle error state (show error message on API failure)
   - [x] 3.1.5 Show loading indicator while fetching users
@@ -84,7 +88,12 @@
 
 ### 4. Improvements
 
-- [ ] 4.1 UI/UX polish (bonus)
+- [x] 4.1 Fix infinite change detection issues
+  - [x] 4.1.1 Fix NG0103 infinite change detection error on logout menu hover
+  - [x] 4.1.1.1 Convert currentUser getters to computed signals in AppComponent, UsersListPageComponent, and UserFormPageComponent
+  - [x] 4.1.1.2 Optimize effect() in UserFormComponent to prevent unnecessary re-runs
+  - [x] 4.1.1.3 Update templates to use signal syntax for currentUser and isLoggedIn
+- [ ] 4.2 UI/UX polish (bonus)
   - [ ] 4.1.1 Create design system foundation
     - [x] 4.1.1.1 Create src/styles/ directory with \_variables.scss for spacing variables only (keep Material's default colors and typography)
     - [x] 4.1.1.2 Add global layout utilities (container, page-header, page-content) to styles.scss
