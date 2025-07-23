@@ -1,7 +1,7 @@
 // Add global styles for snackbar customization
 :host ::ng-deep {
   .success-snackbar {
-    background-color: #4caf50;
+    background-color: var(--color-success);
     color: white;
 
     .mat-simple-snackbar-action {
@@ -10,11 +10,17 @@
   }
 
   .error-snackbar {
-    background-color: #f44336;
+    background-color: var(--color-error);
     color: white;
 
     .mat-simple-snackbar-action {
       color: white;
     }
   }
+}
+
+.change-password-section {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--spacing-xl);
 }

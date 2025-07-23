@@ -1,10 +1,24 @@
 .users-table {
   width: 100%;
-  margin-top: var(--spacing-md);
+  max-width: 800px;
+  margin-top: var(--spacing-lg);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+// Right-align the actions column
+.users-table .mat-column-actions {
+  text-align: right;
+}
+
+.users-table .mat-column-actions .mat-mdc-cell {
+  text-align: right;
 }
 
 p {
-  margin-top: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
   text-align: center;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--color-text-secondary);
+  font-size: 1.1rem;
+  padding: var(--spacing-lg);
 }

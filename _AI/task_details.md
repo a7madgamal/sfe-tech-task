@@ -88,11 +88,11 @@
   - [ ] 4.1.1 Create design system foundation
     - [x] 4.1.1.1 Create src/styles/ directory with \_variables.scss for spacing variables only (keep Material's default colors and typography)
     - [x] 4.1.1.2 Add global layout utilities (container, page-header, page-content) to styles.scss
-    - [ ] 4.1.1.3 Add utility classes (flex, flex-center, flex-between, gap utilities) to styles.scss
-  - [ ] 4.1.2 Remove inline styles and implement proper layout
-    - [ ] 4.1.2.1 Replace inline styles in users-list-page.component.html with proper CSS classes
-    - [ ] 4.1.2.2 Replace inline styles in user-form-page.component.html with proper CSS classes
-    - [ ] 4.1.2.3 Add proper spacing and layout to all component SCSS files
+    - [x] 4.1.1.3 Add utility classes (flex, flex-center, flex-between, gap utilities) to styles.scss
+  - [x] 4.1.2 Remove inline styles and implement proper layout
+    - [x] 4.1.2.1 Replace inline styles in users-list-page.component.html with proper CSS classes
+    - [x] 4.1.2.2 Replace inline styles in user-form-page.component.html with proper CSS classes
+    - [x] 4.1.2.3 Add proper spacing and layout to all component SCSS files
   - [ ] 4.1.3 Standardize Material UI components
     - [ ] 4.1.3.1 Implement consistent button hierarchy (primary, secondary, icon buttons)
     - [ ] 4.1.3.2 Standardize form field styling and spacing across all forms
