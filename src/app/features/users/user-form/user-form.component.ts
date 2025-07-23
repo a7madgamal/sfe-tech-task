@@ -6,10 +6,19 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-user-form',
-  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatIconModule
+  ],
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.scss'
 })
@@ -19,6 +28,7 @@ export class UserFormComponent {
 
   save: OutputEmitterRef<Partial<User>> = output();
   cancel: OutputEmitterRef<void> = output();
+  changePassword: OutputEmitterRef<void> = output();
 
   private fb = inject(FormBuilder);
 

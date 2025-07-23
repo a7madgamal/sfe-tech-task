@@ -24,6 +24,15 @@
     >
   </mat-form-field>
 
+  @if (user()?.id) {
+    <div class="change-password-section">
+      <button mat-stroked-button type="button" (click)="changePassword.emit()" [disabled]="disabled">
+        <mat-icon>lock</mat-icon>
+        Change Password
+      </button>
+    </div>
+  }
+
   <div class="actions">
     <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || disabled">Save</button>
     <button mat-stroked-button type="button" (click)="cancel.emit()" [disabled]="disabled">Cancel</button>

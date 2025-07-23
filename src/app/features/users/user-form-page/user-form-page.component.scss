@@ -19,8 +19,36 @@
   }
 }
 
-.change-password-section {
+.header-content {
   display: flex;
-  justify-content: flex-end;
-  margin-top: var(--spacing-xl);
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.back-button {
+  margin-right: var(--spacing-sm);
+}
+
+.form-container {
+  max-width: 600px;
+  width: 100%;
+}
+
+.error-message {
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-md);
+  border-radius: 4px;
+  background-color: var(--color-error-light);
+}
+
+// Override page content padding for form pages
+:host .page-content {
+  padding: var(--spacing-md) 0;
 }
