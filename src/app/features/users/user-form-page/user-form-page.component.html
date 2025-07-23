@@ -1,17 +1,6 @@
-<div class="page-header">
-  <div class="header-content">
-    <div class="header-left">
-      <button mat-icon-button (click)="goBack()" class="back-button" matTooltip="Back to Users">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-      <h2>{{ user()?.id ? 'Edit' : 'Create' }} User</h2>
-    </div>
-  </div>
-</div>
-
 <div class="page-content">
   @if (error()) {
-    <mat-error class="error-message">{{ error() }}</mat-error>
+    <mat-error class="mat-accent error-message">{{ error() }}</mat-error>
   }
 
   @if (!loading()) {

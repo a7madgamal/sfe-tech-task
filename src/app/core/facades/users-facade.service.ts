@@ -33,7 +33,6 @@ export class UsersFacadeService {
     this.api.getUserById(id).subscribe({
       next: user => {
         this.store.setUser(user);
-        console.log('Set user in store:', user);
         this.store.setError('');
         this.store.setLoading(false);
       },

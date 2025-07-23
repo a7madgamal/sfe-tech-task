@@ -1,4 +1,4 @@
-import { Component, inject, input, output, OutputEmitterRef, Input, effect } from '@angular/core';
+import { Component, inject, input, output, OutputEmitterRef, Input, effect, NgZone } from '@angular/core';
 import { User } from '../../../shared/models/user';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
@@ -8,6 +8,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { passwordValidators } from '../../../shared/password-validators';
+import { TouchedAndDirtyErrorStateMatcher } from '../../../shared/always-error-state-matcher';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 @Component({
   selector: 'app-user-form',
@@ -37,13 +40,15 @@ export class UserFormComponent {
   private previousUser: User | null | undefined = null;
   private previousCurrentUser: { id: number; username: string; role: string } | null | undefined = null;
 
+  matcher: ErrorStateMatcher = new TouchedAndDirtyErrorStateMatcher();
+
   form = this.fb.group({
     username: ['', [Validators.required, this.noTestValidator]],
     role: ['', Validators.required],
-    password: ['']
+    password: ['', passwordValidators()]
   });
 
-  constructor() {
+  constructor(private ngZone: NgZone) {
     // Initialize form with default values
     this.form.patchValue({ role: 'user' }, { emitEvent: false });
 
@@ -60,12 +65,19 @@ export class UserFormComponent {
     });
   }
 
+  onPasswordFocus() {
+    this.ngZone.run(() => {
+      this.form.get('password')?.markAsDirty();
+      this.form.get('password')?.markAllAsTouched();
+    });
+  }
+
   private updateForm(): void {
     const u = this.user();
     const canCreateAdmin = this.canCreateAdmin();
 
-    if (u) {
-      // For existing users, only patch username and role, exclude password
+    // Only update validators if the user context actually changes
+    if (u && u !== this.previousUser) {
       this.form.patchValue(
         {
           username: u.username,
@@ -73,19 +85,18 @@ export class UserFormComponent {
         },
         { emitEvent: false }
       );
-      // Remove password validation for existing users
       this.form.get('password')?.clearValidators();
       this.form.get('password')?.updateValueAndValidity({ emitEvent: false });
-    } else {
-      // For new users, add password validation and set default role
-      this.form.get('password')?.setValidators([Validators.required]);
+    } else if (!u && this.previousUser !== null) {
+      this.form.get('password')?.setValidators(passwordValidators());
       this.form.get('password')?.updateValueAndValidity({ emitEvent: false });
-
-      // Set default role to user for new users
+      // Do NOT patch the password field value here
       this.form.patchValue({ role: 'user' }, { emitEvent: false });
     }
 
-    // Disable role control for non-admin users
+    // Debug: log password control state
+    // (Removed debug subscription logic for production)
+
     if (!canCreateAdmin) {
       this.form.get('role')?.disable({ emitEvent: false });
     } else {

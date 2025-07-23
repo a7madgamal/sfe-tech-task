@@ -7,6 +7,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { TouchedAndDirtyErrorStateMatcher } from '../../../shared/always-error-state-matcher';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { passwordValidators } from '../../../shared/password-validators';
 
 @Component({
   selector: 'app-change-password-dialog',
@@ -133,10 +136,11 @@ export class ChangePasswordDialogComponent implements OnInit, OnDestroy {
   showConfirm = signal(false);
   showPasswordMismatch = signal(false);
   private formSubscription?: Subscription;
+  matcher: ErrorStateMatcher = new TouchedAndDirtyErrorStateMatcher();
 
   form = this.fb.group(
     {
-      newPassword: ['', [Validators.required, Validators.minLength(6), this.numberRequiredValidator]],
+      newPassword: ['', passwordValidators()],
       confirmPassword: ['', Validators.required]
     },
     { validators: this.passwordsMatchValidator }
@@ -179,14 +183,6 @@ export class ChangePasswordDialogComponent implements OnInit, OnDestroy {
       event.preventDefault();
       this.cancel();
     }
-  }
-
-  numberRequiredValidator(control: any) {
-    const value = control.value;
-    if (value && !/\d/.test(value)) {
-      return { numberRequired: true };
-    }
-    return null;
   }
 
   passwordsMatchValidator(group: any) {

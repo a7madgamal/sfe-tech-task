@@ -1,9 +1,11 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
   <mat-form-field appearance="fill">
-    <mat-label>Username</mat-label>
+    <mat-label class="mat-accent">Username</mat-label>
     <input matInput formControlName="username" />
-    <mat-error *ngIf="username?.hasError('required') && username?.touched">Username is required</mat-error>
-    <mat-error *ngIf="username?.hasError('testNotAllowed') && username?.touched"
+    <mat-error class="mat-accent" *ngIf="username?.hasError('required') && username?.touched"
+      >Username is required</mat-error
+    >
+    <mat-error class="mat-accent" *ngIf="username?.hasError('testNotAllowed') && username?.touched"
       >Username cannot contain 'test'</mat-error
     >
   </mat-form-field>
@@ -14,7 +16,7 @@
     matTooltipShowDelay="500"
   >
     <mat-form-field appearance="fill">
-      <mat-label>Role</mat-label>
+      <mat-label class="mat-accent">Role</mat-label>
       <mat-select formControlName="role">
         <mat-option value="user">User</mat-option>
         <mat-option value="admin">Admin</mat-option>
@@ -23,11 +25,28 @@
   </span>
 
   <mat-form-field appearance="fill" *ngIf="!user()?.id">
-    <mat-label>Password</mat-label>
-    <input matInput type="password" formControlName="password" />
-    <mat-error *ngIf="form.get('password')?.hasError('required') && form.get('password')?.touched"
-      >Password is required</mat-error
+    <mat-label class="mat-accent">Password</mat-label>
+    <input
+      matInput
+      type="password"
+      formControlName="password"
+      [errorStateMatcher]="matcher"
+      (focus)="onPasswordFocus()"
+      (input)="!form.get('password')?.dirty && form.get('password')?.markAsDirty()"
+      (blur)="form.get('password')?.markAsTouched()"
+    />
+    <mat-error class="mat-accent" *ngIf="form.get('password')?.hasError('required') && form.get('password')?.dirty">
+      Password is required
+    </mat-error>
+    <mat-error class="mat-accent" *ngIf="form.get('password')?.hasError('minlength') && form.get('password')?.dirty">
+      Password must be at least 6 characters
+    </mat-error>
+    <mat-error
+      class="mat-accent"
+      *ngIf="form.get('password')?.hasError('numberRequired') && form.get('password')?.dirty"
     >
+      Password must contain a number
+    </mat-error>
   </mat-form-field>
 
   @if (user()?.id) {
