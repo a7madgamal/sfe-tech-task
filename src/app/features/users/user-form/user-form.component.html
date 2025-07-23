@@ -1,4 +1,11 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
+  <h3 class="mat-subheading-2" style="margin-bottom: 1rem">
+    @if (!user()?.id) {
+      Create User
+    } @else {
+      Edit User
+    }
+  </h3>
   <mat-form-field appearance="fill">
     <mat-label class="mat-accent">Username</mat-label>
     <input matInput formControlName="username" />
