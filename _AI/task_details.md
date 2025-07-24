@@ -108,14 +108,14 @@
   - [x] 4.2.4 Enhance user experience
     - [x] 4.2.4.1 Add proper page titles and navigation breadcrumbs
     - [x] 4.2.4.2 Implement responsive design for mobile devices
-    - [ ] 4.2.4.3 Add smooth transitions and hover effects
+    - [x] 4.2.4.3 Add smooth transitions and hover effects
 
 ### 5. Git & Submission
 
 - [x] 5.1 Git commit guidelines
   - [x] 5.1.1 Start with an initial empty commit
   - [x] 5.1.2 Use small, clear commits for each sub-task
-  - [ ] 5.1.3 End with a final commit when finished
+  - [x] 5.1.3 End with a final commit when finished
 
 ---
 
