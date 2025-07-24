@@ -6,7 +6,7 @@
         [currentUser]="currentUser()"
         (saveUser)="handleSave($event)"
         (cancelUser)="goBack()"
-        (changePassword)="openChangePasswordDialog()"
+        (changeUserPassword)="openChangePasswordDialog()"
         [disabled]="loading()"
         [error]="error() || null"
       />
